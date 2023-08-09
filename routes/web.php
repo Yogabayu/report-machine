@@ -1,8 +1,9 @@
 <?php
 
+use App\Http\Controllers\admin\ProfileController;
 use App\Http\Controllers\authentications\Login;
 use App\Http\Controllers\authentications\Register;
-use App\Http\Controllers\dashboard\Analytics;
+use App\Http\Controllers\admin\Analytics;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -33,6 +34,9 @@ Route::get('logout',[Login::class,'logout'])->name('logout');
 
 Route::middleware('auth')->group(function (){
     Route::get('dashboard', [Analytics::class,'index'])->name('dashboard-analytics');
+
+    //profile
+    Route::resource('profile',ProfileController::class);
 });
 
 

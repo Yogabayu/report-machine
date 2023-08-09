@@ -17,20 +17,45 @@
     <div class="menu-inner-shadow"></div>
 
     <ul class="menu-inner py-1">
-        <li class="menu-item ">
-            <a href="javascript:void(0)'" class="menu-link menu-toggle">
-                <i class="menu-icon tf-icons bx bx-layout"></i>
+        <li class="menu-item {{ request()->is('dashboard') ? 'active' : '' }}">
+            <a href="javascript:void(0)'" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-home-circle"></i>
                 <div>Dashboard</div>
             </a>
+        </li>
+        <li class="menu-item {{ request()->is('profile') ? 'active' : '' }}">
+            <a href="{{ route('profile.index') }}" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-user"></i>
+                <div>Profile</div>
+            </a>
+        </li>
+        {{-- <li class="menu-item ">
+            <a href="#" class="menu-link menu-toggle">
+                <i class="menu-icon tf-icons bx bx bx-dock-top"></i>
+                <div>Account Settings</div>
+            </a>
             <ul class="menu-sub">
-                <li class="menu-item active open">
+                <li class="menu-item">
                     <a href="#" class="menu-link">
-                        <i class="menu-icon tf-icons bx bx-layout"></i>
+                        <i class="menu-icon tf-icons bx bx bx-dock-top"></i>
                         <div>Account</div>
                     </a>
                 </li>
+                active open -> untuk menu yg active
+                <li class="menu-item ">
+                    <a href="#" class="menu-link">
+                        <i class="menu-icon tf-icons bx bx bx-dock-top"></i>
+                        <div>Notifications</div>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="#" class="menu-link">
+                        <i class="menu-icon tf-icons bx bx bx-dock-top"></i>
+                        <div>Connections</div>
+                    </a>
+                </li>
             </ul>
-        </li>
+        </li> --}}
     </ul>
 
 </aside>
