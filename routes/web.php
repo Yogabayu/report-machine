@@ -37,6 +37,7 @@ Route::middleware('auth')->group(function (){
 
     //profile
     Route::resource('profile',ProfileController::class);
+    Route::post('user/delete',[ProfileController::class,'delete'])->name('user.delete');
 });
 
 

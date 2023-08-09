@@ -3,7 +3,10 @@
 namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Profile;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 
 class ProfileController extends Controller
 {
@@ -14,7 +17,10 @@ class ProfileController extends Controller
      */
     public function index()
     {
-        return view('content.web-pages.profile.settings');
+        $idUser = auth()->user();
+        $user = User::where('id',$idUser->id)->first();
+        // dd($user);
+        return view('content.web-pages.profile.settings',compact('user'));
     }
 
     /**
@@ -81,5 +87,19 @@ class ProfileController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function delete()
+    {
+        try {
+            $user = auth()->user();
+            $user->delete();
+
+            Session::flash('success', 'Sukses menghapus account');
+            return redirect('login');
+        } catch (\Exception $e) {
+            Session::flash('error', $e->getMessage());
+            return back();
+        }
     }
 }
