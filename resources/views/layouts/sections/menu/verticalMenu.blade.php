@@ -23,10 +23,10 @@
                 <div>Dashboard</div>
             </a>
         </li>
-        <li class="menu-item {{ request()->is('profile') ? 'active' : '' }}">
-            <a href="{{ route('profile.index') }}" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-user"></i>
-                <div>Profile</div>
+        <li class="menu-item {{ request()->is('cabang') ? 'active' : '' }}">
+            <a href="{{ route('cabang.index') }}" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-map-pin"></i>
+                <div>Cabang</div>
             </a>
         </li>
         {{-- <li class="menu-item ">

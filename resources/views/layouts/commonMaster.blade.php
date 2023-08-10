@@ -25,6 +25,14 @@
 
     <!-- Include Scripts for customizer, helper, analytics, config -->
     @include('layouts/sections/scriptsIncludes')
+
+    <!-- custom -->
+    <link rel="stylesheet" type="text/css"
+        href="{{ asset('assets') }}/app-assets/vendors/css/tables/datatable/datatables.min.css">
+
+    <!-- select2 -->
+
+    @yield('css')
 </head>
 
 <body>
@@ -42,6 +50,28 @@
     <!-- Include Scripts -->
     @include('layouts/sections/scripts')
 
+    <script src="{{ asset('assets') }}/app-assets/vendors/js/vendors.min.js"></script>
+    <script src="{{ asset('assets') }}/app-assets/vendors/js/charts/apexcharts.js"></script>
+    <script src="{{ asset('assets') }}/app-assets/js/core/app-menu.js"></script>
+    <script src="{{ asset('assets') }}/app-assets/js/core/app.js"></script>
+    <script src="{{ asset('assets') }}/app-assets/js/scripts/components.js"></script>
+    <script src="{{ asset('assets') }}/app-assets/js/scripts/pages/faq-kb.js"></script>
+    <script src="{{ asset('assets') }}/app-assets/js/scripts/pages/dashboard-ecommerce.js"></script>
+    <script src="{{ asset('assets') }}/app-assets/vendors/js/forms/select/select2.full.min.js"></script>
+    <script src="{{ asset('assets') }}/app-assets/js/scripts/forms/select/form-select2.js"></script>
+    <script src="{{ asset('assets') }}/app-assets/vendors/js/tables/datatable/pdfmake.min.js"></script>
+    <script src="{{ asset('assets') }}/app-assets/vendors/js/tables/datatable/vfs_fonts.js"></script>
+    <script src="{{ asset('assets') }}/app-assets/vendors/js/tables/datatable/datatables.min.js"></script>
+    <script src="{{ asset('assets') }}/app-assets/vendors/js/tables/datatable/datatables.buttons.min.js"></script>
+    <script src="{{ asset('assets') }}/app-assets/vendors/js/tables/datatable/buttons.html5.min.js"></script>
+    <script src="{{ asset('assets') }}/app-assets/vendors/js/tables/datatable/buttons.print.min.js"></script>
+    <script src="{{ asset('assets') }}/app-assets/vendors/js/tables/datatable/buttons.bootstrap.min.js"></script>
+    <script src="{{ asset('assets') }}/app-assets/vendors/js/tables/datatable/datatables.bootstrap4.min.js"></script>
+    <script src="{{ asset('assets') }}/app-assets/js/scripts/datatables/datatable.js"></script>
+    <script src="{{ asset('assets') }}/app-assets/js/scripts/pages/dashboard-analytics.js"></script>
+    <script src="{{ asset('assets') }}/app-assets/js/scripts/pages/app-user.js"></script>
+    <script src="{{ asset('assets') }}/app-assets/js/scripts/pages/invoice.js"></script>
+    @yield('js')
 </body>
 
 </html>

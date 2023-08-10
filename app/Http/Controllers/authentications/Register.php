@@ -23,6 +23,12 @@ class Register extends Controller
                 'email' => 'required|email|unique:users',
                 'password' => 'required|min:8',
             ]);
+            
+            $cekEmail = User::where('email',$request->email)->first();
+            if ($cekEmail) {
+                Session::flash('error','Email sudah terdaftar sebelumnya');
+                return redirect('register');
+            }
 
             $user = new User();
             $user->email = $request->email;

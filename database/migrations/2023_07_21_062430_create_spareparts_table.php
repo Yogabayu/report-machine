@@ -16,12 +16,14 @@ class CreateSparepartsTable extends Migration
         Schema::create('spareparts', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('machine_id');
+            $table->unsignedBigInteger('cabang_id');
             $table->string('nama');
             $table->string('photo');
             $table->string('harga')->nullable();
             $table->timestamps();
 
             $table->foreign('machine_id')->references('id')->on('machines');
+            $table->foreign('cabang_id')->references('id')->on('cabangs');
         });
     }
 

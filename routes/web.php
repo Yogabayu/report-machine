@@ -4,6 +4,7 @@ use App\Http\Controllers\admin\ProfileController;
 use App\Http\Controllers\authentications\Login;
 use App\Http\Controllers\authentications\Register;
 use App\Http\Controllers\admin\Analytics;
+use App\Http\Controllers\admin\CabangController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -38,6 +39,9 @@ Route::middleware('auth')->group(function (){
     //profile
     Route::resource('profile',ProfileController::class);
     Route::post('user/delete',[ProfileController::class,'delete'])->name('user.delete');
+
+    //cabangs
+    Route::resource('cabang',CabangController::class);
 });
 
 

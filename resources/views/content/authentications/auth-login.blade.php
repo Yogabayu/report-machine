@@ -27,13 +27,17 @@
                         <p class="mb-4">Please sign-in to your account</p>
 
                         @if (session('success'))
-                            <div class="alert alert-success">
+                            <div class="alert alert-success alert-dismissible fade show">
                                 {{ session('success') }}
+                                <button type="button" class="btn-close" data-dismiss="alert" aria-label="Close">
+                                </button>
                             </div>
                         @endif
                         @if (session('error'))
-                            <div class="alert alert-danger">
+                            <div class="alert alert-danger alert-dismissible fade show">
                                 {{ session('error') }}
+                                <button type="button" class="btn-close" data-dismiss="alert" aria-label="Close">
+                                </button>
                             </div>
                         @endif
 

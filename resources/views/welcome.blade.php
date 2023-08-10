@@ -73,7 +73,11 @@
                 yang tepat dan efisien dalam pembuatan laporan. Dengan fitur canggih dan antarmuka yang mudah digunakan,
                 Reporting Machine membantu Anda menghasilkan laporan berkualitas tinggi dengan mudah.</p>
             {{-- <a href="#More" class="btn btn_3">Login</a> --}}
-            <a href="{{ route('login') }}" class="btn btn_3">Log in</a>
+            @if (auth()->guard('web')->user())
+                <a href="{{ route('dashboard-analytics') }}" class="btn btn_3">Dashboard</a>
+            @else
+                <a href="{{ route('login') }}" class="btn btn_3">Log in</a>
+            @endif
         </article>
     </header>
 

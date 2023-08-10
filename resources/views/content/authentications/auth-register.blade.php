@@ -28,13 +28,17 @@
                         <h4 class="mb-2">Starts here 🚀</h4>
                         {{-- <p class="mb-4">Make your app management easy and fun!</p> --}}
                         @if (session('success'))
-                            <div class="alert alert-success">
+                            <div class="alert alert-success alert-dismissible fade show">
                                 {{ session('success') }}
+                                <button type="button" class="btn-close" data-dismiss="alert" aria-label="Close">
+                                </button>
                             </div>
                         @endif
                         @if (session('error'))
-                            <div class="alert alert-danger">
+                            <div class="alert alert-danger alert-dismissible fade show">
                                 {{ session('error') }}
+                                <button type="button" class="btn-close" data-dismiss="alert" aria-label="Close">
+                                </button>
                             </div>
                         @endif
 
