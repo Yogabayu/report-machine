@@ -18,14 +18,14 @@ class CreateProfilesTable extends Migration
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('cabang_id');
             $table->string('nama');
-            $table->integer('level');
-            $table->integer('status');
+            $table->integer('level')->default(3)->comment('1=superadmin, 2=admin, 3=teknisi');
+            $table->integer('status')->default(1)->comment('0=nonaktif, 1=aktif');
             $table->string('alamat');
             $table->integer('umur');
             $table->string('pendidikan');
-            $table->string('jenis_kelamin');
+            $table->string('jenis_kelamin')->comment('l=laki-laki, p=perempuan');
             $table->string('telp');
-            $table->string('mariage');
+            $table->integer('mariage')->default(3)->comment('1=menikah, 2=belum menikah,3=undefined');
             $table->string('foto');
             $table->timestamps();
 

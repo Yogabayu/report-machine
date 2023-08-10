@@ -22,42 +22,28 @@
                             class="bx bx-link-alt me-1"></i> Connections</a></li>
             </ul> --}}
             @if (session('success'))
-                <div class="alert alert-success">
+                <div class="alert alert-success alert-dismissible fade show">
                     {{ session('success') }}
+                    <button type="button" class="btn-close" data-dismiss="alert" aria-label="Close">
+                    </button>
                 </div>
             @endif
             @if (session('error'))
-                <div class="alert alert-danger">
+                <div class="alert alert-danger alert-dismissible fade show">
                     {{ session('error') }}
+                    <button type="button" class="btn-close" data-dismiss="alert" aria-label="Close">
+                    </button>
                 </div>
             @endif
             <div class="card mb-4">
-                <h5 class="card-header">Profile Details</h5>
-                <!-- Account -->
-                {{-- <div class="card-body">
-                    <div class="d-flex align-items-start align-items-sm-center gap-4">
-                        <img src="{{ asset('assets/img/avatars/1.png') }}" alt="user-avatar" class="d-block rounded"
-                            height="100" width="100" id="uploadedAvatar" />
-                        <div class="button-wrapper">
-                            <label for="upload" class="btn btn-primary me-2 mb-4" tabindex="0">
-                                <span class="d-none d-sm-block">Upload new photo</span>
-                                <i class="bx bx-upload d-block d-sm-none"></i>
-                                <input type="file" id="upload" class="account-file-input" hidden
-                                    accept="image/png, image/jpeg" />
-                            </label>
-                            <button type="button" class="btn btn-outline-secondary account-image-reset mb-4">
-                                <i class="bx bx-reset d-block d-sm-none"></i>
-                                <span class="d-none d-sm-block">Reset</span>
-                            </button>
-
-                            <p class="text-muted mb-0">Allowed JPG, GIF or PNG. Max size of 800K</p>
-                        </div>
-                    </div>
-                </div> --}}
+                <h5 class="card-header">Authentication</h5>
                 <hr class="my-0">
                 <div class="card-body">
-                    <form id="formAccountSettings" method="POST" onsubmit="return false">
+                    <form id="formAccountSettings" method="POST" action="{{ route('authupdate') }}">
+                        @csrf
+                        @method('PUT')
                         <div class="row">
+                            <input type="hidden" name="id" id="id" value="{{ $user->id }}">
                             <div class="mb-3 col-md-6">
                                 <label for="email" class="form-label">Email</label>
                                 <input class="form-control" type="email" id="email" name="email"
@@ -65,7 +51,7 @@
                             </div>
                             <div class="mb-3 col-md-6">
                                 <label for="password" class="form-label">Password</label>
-                                <input class="form-control" type="text" name="password" id="password" />
+                                <input class="form-control" type="password" name="password" id="password" />
                             </div>
                         </div>
                         <div class="mt-2" style="display: flex; justify-content: flex-end">
@@ -75,8 +61,90 @@
                         </div>
                     </form>
                 </div>
-                <!-- /Account -->
             </div>
+
+            <div class="card mb-4">
+                <h5 class="card-header">Profile</h5>
+                <hr class="my-0">
+                <div class="card-body">
+                    <form action="{{ route('profileupdate') }}" method="POST" enctype="multipart/form-data">
+                        @csrf
+                        @method('PUT')
+                        <div class="row">
+                            <input type="hidden" name="user_id" id="user_id" value="{{ $user->id }}">
+                            <div class="mb-3 col-md-6">
+                                <label for="cabang" class="form-label">Cabang</label>
+                                <select name="cabang_id" id="cabang_id" class="form-control" required>
+                                    <option value="">-</option>
+                                    @foreach ($cabang as $cab)
+                                        <option value="{{ $cab->id }}"
+                                            @if ($profile->cabang_id == $cab->id) selected @else @endif>
+                                            {{ $cab->nama }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="mb-3 col-md-6">
+                                <label for="nama" class="form-label">Nama</label>
+                                <input class="form-control" type="text" name="nama" id="nama"
+                                    value="{{ $profile->nama ?? '' }}" />
+                            </div>
+                            <div class="mb-3 col-md-6">
+                                <label for="alamat" class="form-label">Alamat</label>
+                                <input class="form-control" type="text" name="alamat" id="umur"
+                                    value="{{ $profile->alamat ?? '' }}" />
+                            </div>
+                            <div class="mb-3 col-md-6">
+                                <label for="umur" class="form-label">Umur</label>
+                                <input class="form-control" type="number" name="umur" id="umur"
+                                    value="{{ $profile->umur ?? '' }}" />
+                            </div>
+                            <div class="mb-3 col-md-6">
+                                <label for="pendidikan" class="form-label">Pendidikan Terakhir</label>
+                                <input class="form-control" type="text" name="pendidikan" id="pendidikan"
+                                    value="{{ $profile->pendidikan ?? '' }}" />
+                            </div>
+                            <div class="mb-3 col-md-6">
+                                <label for="jenis_kelamin" class="form-label">Jenis Kelamin</label>
+                                <select name="jenis_kelamin" id="jenis_kelamin" class="form-control" required>
+                                    <option value="l" @if ($profile->jenis_kelamin == 'l') selected @endif>Laki-laki
+                                    </option>
+                                    <option value="p" @if ($profile->jenis_kelamin == 'p') selected @endif>Perempuan
+                                    </option>
+                                </select>
+                            </div>
+                            <div class="mb-3 col-md-6">
+                                <label for="telp" class="form-label">Telp.</label>
+                                <input class="form-control" type="text" name="telp" id="telp"
+                                    value="{{ $profile->telp ?? '' }}" />
+                            </div>
+                            <div class="mb-3 col-md-6">
+                                <label for="mariage" class="form-label">Status Pernikahan</label>
+                                <select name="mariage" id="mariage" class="form-control" required>
+                                    <option value="1" @if ($profile->mariage == 1) selected @endif>Menikah
+                                    </option>
+                                    <option value="2" @if ($profile->mariage == 2) selected @endif>Belum Menikah
+                                    </option>
+                                    <option value="3" @if ($profile->mariage == 3) selected @endif>Undefined
+                                    </option>
+                                </select>
+                            </div>
+                            <div class="mb-3 col-md-6">
+                                <label for="foto" class="form-label">Foto</label>
+                                <img src="{{ asset('file/profile') }}/foto/{{ $profile->foto }}" width="50%" />
+                                <input type="file" id="foto" name="foto" class="form-control"
+                                    accept="image/png, image/jpg, image/jpeg">
+                            </div>
+                        </div>
+                        <div class="mt-2" style="display: flex; justify-content: flex-end">
+                            <button type="submit" class="btn btn-primary me-2">
+                                Save changes
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
             <div class="card">
                 <h5 class="card-header">Delete Account</h5>
                 <div class="card-body">

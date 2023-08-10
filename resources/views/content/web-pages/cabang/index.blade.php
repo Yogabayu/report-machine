@@ -9,7 +9,7 @@
 
     <!-- Responsive Table -->
     <div class="card">
-        <h5 class="card-header">Responsive Table <a href="#" class="mx-5 btn btn-primary" data-toggle="modal"
+        <h5 class="card-header">Semua Cabang <a href="#" class="mx-5 btn btn-primary" data-toggle="modal"
                 data-target="#Insert">
                 <i class="menu-icon tf-icons bx bx-edit"></i> Tambah Cabang
             </a></h5>

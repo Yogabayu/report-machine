@@ -38,6 +38,8 @@ Route::middleware('auth')->group(function (){
 
     //profile
     Route::resource('profile',ProfileController::class);
+    Route::put('authupdate',[ProfileController::class,'authUpdate'])->name('authupdate');
+    Route::put('profileupdate',[ProfileController::class,'profileUpdate'])->name('profileupdate');
     Route::post('user/delete',[ProfileController::class,'delete'])->name('user.delete');
 
     //cabangs
