@@ -2,7 +2,7 @@
 
     <!-- ! Hide app brand if navbar-full -->
     <div class="app-brand demo">
-        <a href="{{ url('/') }}" class="app-brand-link">
+        <a href="{{ url('/dashboard') }}" class="app-brand-link">
             <span class="app-brand-logo demo">
                 @include('_partials.macros', ['width' => 25, 'withbg' => '#696cff'])
             </span>
@@ -18,15 +18,33 @@
 
     <ul class="menu-inner py-1">
         <li class="menu-item {{ request()->is('dashboard') ? 'active' : '' }}">
-            <a href="javascript:void(0)'" class="menu-link">
+            <a href="{{ url('/dashboard') }}" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-home-circle"></i>
                 <div>Dashboard</div>
+            </a>
+        </li>
+        <li class="menu-item {{ request()->is('users') ? 'active' : '' }}">
+            <a href="#" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-user"></i>
+                <div>Users</div>
             </a>
         </li>
         <li class="menu-item {{ request()->is('cabang') ? 'active' : '' }}">
             <a href="{{ route('cabang.index') }}" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-map-pin"></i>
                 <div>Cabang</div>
+            </a>
+        </li>
+        <li class="menu-item {{ request()->is('machines') ? 'active' : '' }}">
+            <a href="#" class="menu-link">
+                <i class="menu-icon tf-icons bx bxl-steam"></i>
+                <div>Machine</div>
+            </a>
+        </li>
+        <li class="menu-item {{ request()->is('spareparts') ? 'active' : '' }}">
+            <a href="#" class="menu-link">
+                <i class="menu-icon tf-icons bx bxs-brightness"></i>
+                <div>Spareparts</div>
             </a>
         </li>
         {{-- <li class="menu-item ">

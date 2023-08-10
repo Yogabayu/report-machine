@@ -186,6 +186,8 @@ class CabangController extends Controller
                 File::delete(public_path('file/cabang/foto/' . $cabang->foto));
             }
             $cabang->delete();
+            Session::flash('success', 'Berhasil menghapus data');
+            return redirect('cabang');
         } catch (\Exception $e) {
             Session::flash('error', 'Error please inform administrator immediately: ' . $e->getMessage());
             return redirect('cabang');

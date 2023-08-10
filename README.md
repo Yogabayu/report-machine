@@ -27,5 +27,7 @@ Install this project with git
 
   php artisan laravolt:indonesia:seed
 
+  npm install && npm run dev
+
 ```
 

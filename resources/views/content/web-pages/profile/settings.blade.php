@@ -78,7 +78,7 @@
                                     <option value="">-</option>
                                     @foreach ($cabang as $cab)
                                         <option value="{{ $cab->id }}"
-                                            @if ($profile->cabang_id == $cab->id) selected @else @endif>
+                                            @if ($profile && $profile->cabang_id == $cab->id) selected @else @endif>
                                             {{ $cab->nama }}
                                         </option>
                                     @endforeach
@@ -107,9 +107,9 @@
                             <div class="mb-3 col-md-6">
                                 <label for="jenis_kelamin" class="form-label">Jenis Kelamin</label>
                                 <select name="jenis_kelamin" id="jenis_kelamin" class="form-control" required>
-                                    <option value="l" @if ($profile->jenis_kelamin == 'l') selected @endif>Laki-laki
+                                    <option value="l" @if ($profile && $profile->jenis_kelamin == 'l') selected @endif>Laki-laki
                                     </option>
-                                    <option value="p" @if ($profile->jenis_kelamin == 'p') selected @endif>Perempuan
+                                    <option value="p" @if ($profile && $profile->jenis_kelamin == 'p') selected @endif>Perempuan
                                     </option>
                                 </select>
                             </div>
@@ -121,17 +121,22 @@
                             <div class="mb-3 col-md-6">
                                 <label for="mariage" class="form-label">Status Pernikahan</label>
                                 <select name="mariage" id="mariage" class="form-control" required>
-                                    <option value="1" @if ($profile->mariage == 1) selected @endif>Menikah
+                                    <option value="1" @if ($profile && $profile->mariage == 1) selected @endif>Menikah
                                     </option>
-                                    <option value="2" @if ($profile->mariage == 2) selected @endif>Belum Menikah
+                                    <option value="2" @if ($profile && $profile->mariage == 2) selected @endif>Belum Menikah
                                     </option>
-                                    <option value="3" @if ($profile->mariage == 3) selected @endif>Undefined
+                                    <option value="3" @if ($profile && $profile->mariage == 3) selected @endif>Undefined
                                     </option>
                                 </select>
                             </div>
                             <div class="mb-3 col-md-6">
                                 <label for="foto" class="form-label">Foto</label>
-                                <img src="{{ asset('file/profile') }}/foto/{{ $profile->foto }}" width="50%" />
+                                <br>
+                                @if ($profile && $profile->foto)
+                                    <img src="{{ asset('file/profile') }}/foto/{{ $profile->foto }}" width="50%"
+                                        class="img-fluid mb-3" />
+                                @endif
+
                                 <input type="file" id="foto" name="foto" class="form-control"
                                     accept="image/png, image/jpg, image/jpeg">
                             </div>
@@ -172,4 +177,16 @@
             </div>
         </div>
     </div>
+@endsection
+@section('js')
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const checkbox = document.getElementById("accountActivation");
+            const button = document.querySelector(".deactivate-account");
+
+            checkbox.addEventListener("change", function() {
+                button.disabled = !this.checked;
+            });
+        });
+    </script>
 @endsection

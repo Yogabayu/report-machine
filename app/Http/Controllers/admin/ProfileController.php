@@ -7,6 +7,7 @@ use App\Models\Cabang;
 use App\Models\Profile;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
 
@@ -58,43 +59,51 @@ class ProfileController extends Controller
 
     public function profileUpdate(Request $request)
     {
-        dd($request->all());
+        // dd($request->all());
         try {
             $request->validate([
-                'provinsi_code' => ['required'],
-                'kota_code' => ['required'],
-                'kecamatan_code' => ['required'],
-                'desa_code' => ['required'],
+                'user_id' => ['required'],
+                'cabang_id' => ['required'],
                 'nama' => ['required'],
                 'alamat' => ['required'],
+                'umur' => ['required'],
+                'pendidikan' => ['required'],
+                'jenis_kelamin' => ['required'],
+                'telp' => ['required'],
+                'mariage' => ['required'],
                 'foto' => ['max:2048', 'mimes:jpg,jpeg,png'],
             ]);
 
-            $cabang = Cabang::findOrFail($id);
+            $profile = new Profile;
 
             if ($request->hasFile('foto')) {
-                $oldPhoto = $cabang->foto;
+                // $oldPhoto = $cabang->foto;
 
-                if ($oldPhoto && File::exists(public_path('file/cabang/foto/' . $oldPhoto))) {
-                    File::delete(public_path('file/cabang/foto/' . $oldPhoto));
-                }
+                // if ($oldPhoto && File::exists(public_path('file/cabang/foto/' . $oldPhoto))) {
+                //     File::delete(public_path('file/cabang/foto/' . $oldPhoto));
+                // }
 
                 $imageEXT   = $request->file('foto')->getClientOriginalName();
                 $filename   = pathinfo($imageEXT, PATHINFO_FILENAME);
                 $EXT        = $request->file('foto')->getClientOriginalExtension();
                 $fileimage  = $filename . '_' . time() . '.' . $EXT;
 
-                $path       = $request->file('foto')->move(public_path('file/cabang/foto'), $fileimage);
-                $cabang->foto = $fileimage;
+                $path       = $request->file('foto')->move(public_path('file/profile/foto'), $fileimage);
+                $profile->foto = $fileimage;
             }
 
-            $cabang->provinsi_code = $request->provinsi_code;
-            $cabang->kota_code = $request->kota_code;
-            $cabang->kecamatan_code = $request->kecamatan_code;
-            $cabang->desa_code = $request->desa_code;
-            $cabang->nama = $request->nama;
-            $cabang->alamat = $request->alamat;
-            $cabang->save();
+            $profile->user_id = $request->user_id;
+            $profile->cabang_id = $request->cabang_id;
+            $profile->nama = $request->nama;
+            $profile->level = $request->level ?? 3;
+            $profile->status = $request->status ?? 1;
+            $profile->alamat = $request->alamat;
+            $profile->umur = $request->umur;
+            $profile->telp = $request->telp;
+            $profile->pendidikan = $request->pendidikan;
+            $profile->jenis_kelamin = $request->jenis_kelamin;
+            $profile->mariage = $request->mariage;
+            $profile->save();
 
             Session::flash('success', 'Berhasil Update Data Profile');
             return redirect('profile');
@@ -174,6 +183,12 @@ class ProfileController extends Controller
     {
         try {
             $user = auth()->user();
+            
+            $profile = Profile::findOrFail($user->id);
+            if ($profile->foto && File::exists(public_path('file/profile/foto/' . $profile->foto))) {
+                File::delete(public_path('file/profile/foto/' . $profile->foto));
+            }
+            $profile->delete();
             $user->delete();
 
             Session::flash('success', 'Sukses menghapus account');
