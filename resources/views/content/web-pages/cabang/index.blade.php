@@ -17,7 +17,6 @@
             <div class="alert alert-success alert-dismissible fade show">
                 {{ session('success') }}
                 <button type="button" class="btn-close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
                 </button>
             </div>
         @endif
@@ -25,7 +24,6 @@
             <div class="alert alert-danger alert-dismissible fade show">
                 {{ session('error') }}
                 <button type="button" class="btn-close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
                 </button>
             </div>
         @endif
@@ -58,7 +56,9 @@
                             <td>{{ $cabang->village }}</td>
                             <td>{{ $cabang->nama }}</td>
                             <td>{{ $cabang->alamat }}</td>
-                            <td>{{ $cabang->foto }}</td>
+                            <td>
+                                <img src="{{ asset('file/cabang') }}/foto/{{ $cabang->foto }}" width="50%" />
+                            </td>
                             <td>
                                 <a href="{{ route('cabang.edit', ['cabang' => $cabang->id]) }}" class="mx-2 text-primary"
                                     data-toggle="modal" data-target="#Update{{ $cabang->id }}">
@@ -86,7 +86,7 @@
             <form class="modal-content" action="{{ route('cabang.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel2">Update Cabang</h5>
+                    <h5 class="modal-title" id="exampleModalLabel2">Tambah Data Cabang</h5>
                     <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -129,12 +129,13 @@
                         </div>
                         <div class="row mb-3">
                             <label for="foto" class="form-label">Foto</label>
-                            <input type="file" id="foto" name="foto" class="form-control">
+                            <input type="file" id="foto" name="foto" class="form-control"
+                                accept="image/png, image/jpg, image/jpeg">
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Close</button>
                     <button type="submit" class="btn btn-primary">Save</button>
                 </div>
             </form>

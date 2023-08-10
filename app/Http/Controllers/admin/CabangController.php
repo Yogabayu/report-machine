@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Cabang;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Session;
 use Laravolt\Indonesia\Models\City;
 use Laravolt\Indonesia\Models\District;
@@ -67,7 +68,7 @@ class CabangController extends Controller
                 'desa_code' => ['required'],
                 'nama' => ['required'],
                 'alamat' => ['required'],
-                'foto' => ['required'],
+                'foto' => ['required', 'max:2048', 'mimes:jpg,jpeg,png'],
             ]);
 
             $imageEXT   = $request->file('foto')->getClientOriginalName();
@@ -126,7 +127,49 @@ class CabangController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        try {
+            $request->validate([
+                'provinsi_code' => ['required'],
+                'kota_code' => ['required'],
+                'kecamatan_code' => ['required'],
+                'desa_code' => ['required'],
+                'nama' => ['required'],
+                'alamat' => ['required'],
+                'foto' => ['max:2048', 'mimes:jpg,jpeg,png'],
+            ]);
+
+            $cabang = Cabang::findOrFail($id);
+
+            if ($request->hasFile('foto')) {
+                $oldPhoto = $cabang->foto;
+
+                if ($oldPhoto && File::exists(public_path('file/cabang/foto/' . $oldPhoto))) {
+                    File::delete(public_path('file/cabang/foto/' . $oldPhoto));
+                }
+
+                $imageEXT   = $request->file('foto')->getClientOriginalName();
+                $filename   = pathinfo($imageEXT, PATHINFO_FILENAME);
+                $EXT        = $request->file('foto')->getClientOriginalExtension();
+                $fileimage  = $filename . '_' . time() . '.' . $EXT;
+
+                $path       = $request->file('foto')->move(public_path('file/cabang/foto'), $fileimage);
+                $cabang->foto = $fileimage;
+            }
+
+            $cabang->provinsi_code = $request->provinsi_code;
+            $cabang->kota_code = $request->kota_code;
+            $cabang->kecamatan_code = $request->kecamatan_code;
+            $cabang->desa_code = $request->desa_code;
+            $cabang->nama = $request->nama;
+            $cabang->alamat = $request->alamat;
+            $cabang->save();
+
+            Session::flash('success', 'Berhasil Update Data Cabang');
+            return redirect('cabang');
+        } catch (\Exception $e) {
+            Session::flash('error', 'Error please inform administrator immediately: ' . $e->getMessage());
+            return redirect('cabang');
+        }
     }
 
     /**
@@ -137,6 +180,15 @@ class CabangController extends Controller
      */
     public function destroy($id)
     {
-        //
+        try {
+            $cabang = Cabang::findOrfail($id);
+            if ($cabang->foto && File::exists(public_path('file/cabang/foto/' . $cabang->foto))) {
+                File::delete(public_path('file/cabang/foto/' . $cabang->foto));
+            }
+            $cabang->delete();
+        } catch (\Exception $e) {
+            Session::flash('error', 'Error please inform administrator immediately: ' . $e->getMessage());
+            return redirect('cabang');
+        }
     }
 }
