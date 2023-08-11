@@ -30,8 +30,6 @@
     <link rel="stylesheet" type="text/css"
         href="{{ asset('assets') }}/app-assets/vendors/css/tables/datatable/datatables.min.css">
 
-    <!-- select2 -->
-
     @yield('css')
 </head>
 
