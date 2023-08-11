@@ -69,6 +69,11 @@
     <script src="{{ asset('assets') }}/app-assets/js/scripts/pages/dashboard-analytics.js"></script>
     <script src="{{ asset('assets') }}/app-assets/js/scripts/pages/app-user.js"></script>
     <script src="{{ asset('assets') }}/app-assets/js/scripts/pages/invoice.js"></script>
+    <script>
+        $(function() {
+            $('[data-toggle="tooltip"]').tooltip()
+        })
+    </script>
     @yield('js')
 </body>
 

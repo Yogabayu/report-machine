@@ -8,6 +8,7 @@ use App\Models\Profile;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
@@ -63,7 +64,7 @@ class UserController extends Controller
                 'level'         => 'required',
                 'status'        => 'required',
                 'alamat'        => 'required',
-                'umur'          => 'required|number',
+                'umur'          => 'required',
                 'pendidikan'    => 'required',
                 'jenis_kelamin' => 'required',
                 'telp'          => 'required',

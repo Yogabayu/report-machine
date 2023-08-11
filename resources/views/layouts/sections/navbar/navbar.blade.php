@@ -91,6 +91,23 @@
                                 <span class="fw-semibold d-block">
                                     {{ auth()->guard('web')->user()->profile->nama ??auth()->guard('web')->user()->email }}
                                 </span>
+                                <small class="text-muted">
+                                    @if (auth()->guard('web')->user()->profile->level == 1)
+                                        Superadmin
+                                    @elseif (
+                                        (auth()->guard('web')->user()->profile->level ==
+                                            1) ==
+                                            2)
+                                        Admin
+                                    @elseif (
+                                        (auth()->guard('web')->user()->profile->level ==
+                                            1) ==
+                                            3)
+                                        Teknisi
+                                    @else
+                                        -
+                                    @endif
+                                </small>
                             </div>
                         </div>
                     </a>

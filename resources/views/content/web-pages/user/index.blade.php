@@ -42,7 +42,6 @@
                         <th>Cabang</th>
                         <th>Level Akun</th>
                         <th>Status Akun</th>
-                        <th>Jenis Kelamin</th>
                         <th>Telp</th>
                         <th>Aksi</th>
                     </tr>
@@ -80,27 +79,21 @@
                                     -
                                 @endif
                             </td>
-                            <td>
-                                @if ($user->jenis_kelamin == 'l')
-                                    Laki-laki
-                                @elseif ($user->jenis_kelamin == 'p')
-                                    Perempuan
-                                @else
-                                    -
-                                @endif
-                            </td>
                             <td>{{ $user->telp }}</td>
                             <td>
                                 <a href="#" class="mx-2 text-primary" data-toggle="modal"
-                                    data-target="#Update{{ $user->id }}">
+                                    data-target="#Update{{ $user->id }}" data-toggle="tooltip" data-placement="top"
+                                    title="Edit detail user">
                                     <i class="menu-icon tf-icons bx bx-edit"></i>
                                 </a>
                                 <a href="#" class="mx-2 text-warning" data-toggle="modal"
-                                    data-target="#Show{{ $user->id }}">
+                                    data-target="#Show{{ $user->id }}" data-toggle="tooltip" data-placement="top"
+                                    title="Lihat detail user">
                                     <i class="menu-icon tf-icons bx bx-show"></i>
                                 </a>
                                 <a href="#" class="mx-2 text-danger" data-toggle="modal"
-                                    data-target="#Delete{{ $user->id }}">
+                                    data-target="#Delete{{ $user->id }}" data-toggle="tooltip" data-placement="top"
+                                    title="Hapus user">
                                     <i class="menu-icon tf-icons bx bx-minus-circle"></i>
                                 </a>
                             </td>
@@ -122,15 +115,6 @@
                 </div>
                 <div class="modal-body">
                     <div class="col">
-                        {{-- <div class="row mb-3">
-                            <label for="provinsi_code" class="form-label">Provinsi</label>
-                            <select name="provinsi_code" id="provinsi_code" class="form-control" required>
-                                <option value="">== Pilih Provinsi ==</option>
-                                @foreach ($provinces as $province)
-                                    <option value="{{ $province->code }}">{{ $province->name }}</option>
-                                @endforeach
-                            </select>
-                        </div> --}}
                         <div class="row mb-3">
                             <label for="email" class="form-label">Email</label>
                             <input type="email" id="email" name="email" class="form-control">
@@ -170,6 +154,45 @@
                                 <option value="">---</option>
                                 <option value="1">Aktif</option>
                                 <option value="0">Nonaktif</option>
+                            </select>
+                        </div>
+
+                        <div class="row mb-3">
+                            <label for="alamat" class="form-label">Alamat</label>
+                            <input type="text" id="alamat" name="alamat" class="form-control">
+                        </div>
+
+                        <div class="row mb-3">
+                            <label for="umur" class="form-label">Umur</label>
+                            <input type="number" id="umur" name="umur" class="form-control">
+                        </div>
+
+                        <div class="row mb-3">
+                            <label for="pendidikan" class="form-label">Pendidikan Terakhir</label>
+                            <input type="text" id="pendidikan" name="pendidikan" class="form-control">
+                        </div>
+
+                        <div class="row mb-3">
+                            <label for="jenis_kelamin" class="form-label">Jenis Kelamin</label>
+                            <select name="jenis_kelamin" id="jenis_kelamin" class="form-control" required>
+                                <option value="">---</option>
+                                <option value="l">Laki-laki</option>
+                                <option value="p">Perempuan</option>
+                            </select>
+                        </div>
+
+                        <div class="row mb-3">
+                            <label for="telp" class="form-label">Telp</label>
+                            <input type="number" id="telp" name="telp" class="form-control">
+                        </div>
+
+                        <div class="row mb-3">
+                            <label for="mariage" class="form-label">Status Pernikahan</label>
+                            <select name="mariage" id="mariage" class="form-control" required>
+                                <option value="">---</option>
+                                <option value="1">Menikah</option>
+                                <option value="2">Belum menikah</option>
+                                <option value="3">Undefined</option>
                             </select>
                         </div>
 

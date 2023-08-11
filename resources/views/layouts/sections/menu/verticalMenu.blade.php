@@ -23,12 +23,14 @@
                 <div>Dashboard</div>
             </a>
         </li>
-        <li class="menu-item {{ request()->is('user') ? 'active' : '' }}">
-            <a href="{{ route('user.index') }}" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-user"></i>
-                <div>Users</div>
-            </a>
-        </li>
+        @if (auth()->user()->profile->level == 1)
+            <li class="menu-item {{ request()->is('user') ? 'active' : '' }}">
+                <a href="{{ route('user.index') }}" class="menu-link">
+                    <i class="menu-icon tf-icons bx bx-user"></i>
+                    <div>Users</div>
+                </a>
+            </li>
+        @endif
         <li class="menu-item {{ request()->is('cabang') ? 'active' : '' }}">
             <a href="{{ route('cabang.index') }}" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-map-pin"></i>
