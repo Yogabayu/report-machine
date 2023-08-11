@@ -34,6 +34,8 @@ class Register extends Controller
             $user->email = $request->email;
             $user->password = Hash::make($request->password);
             $user->verification_token = Str::random(40);
+            $user->api_token = now()->addMinute(30);
+            $user->remember_token = Str::random(40);
             $user->save();
             $this->sendVerificationEmail($user);
 
@@ -65,12 +67,84 @@ class Register extends Controller
             return redirect('login');
         }
 
+        if ($user->api_token < now()) {
+            Session::flash('error','Token sudah kadaluwarsa');
+            return redirect('login');
+        }
+
         // Mark the user as verified
         $user->is_verified = true;
         $user->verification_token = null;
+        $user->api_token = null;
         $user->save();
 
         Session::flash('success', 'Berhasil ! selamat akun anda sudah aktif');
+        return redirect('login');
+    }
+
+    public function forgot()
+    {
+        return view('content.authentications.auth-forgot-password');
+    }
+
+    public function forgotaction(Request $request)
+    {
+        try {
+            $request->validate([
+                'email' => 'required|email',
+            ]);
+            
+            $cekEmail = User::where('email',$request->email)->first();
+            if (!$cekEmail) {
+                Session::flash('error','Email tidak terdaftar');
+                return redirect('forgot');
+            }
+            
+            $cekEmail->api_token = Str::random(40);
+            $cekEmail->save();
+
+            $this->sendForgotEmail($cekEmail);
+
+            Session::flash('success', 'Link reset berhasil dibuat, silahkan cek inbox/spam di email anda');
+            return redirect('forgot');
+        } catch (\Exception $e) {
+            Session::flash('error', $e->getMessage());
+            return redirect('forgot');
+        }
+    }
+
+    private function sendForgotEmail(User $user)
+    {
+        $verificationLink = route('forgot-email', ['token' => $user->remember_token]);
+
+        Mail::send('emails.forgot', ['user' => $user, 'verificationLink' => $verificationLink], function ($message) use ($user) {
+            $message->from('reporting_machine@yogabayuap.com', 'Administrator Report');
+            $message->to($user->email, 'Admin');
+            $message->subject('Forgot Email');
+        });
+    }
+
+    public function verifyForgot($token)
+    {
+        $user = User::where('remember_token', $token)->first();
+
+        if (!$user) {
+            Session::flash('error', 'token tidak valid');
+            return redirect('login');
+        }
+
+        if ($user->api_token < now()) {
+            Session::flash('error','Token sudah kadaluwarsa');
+            return redirect('login');
+        }
+
+        // Mark the user as verified
+        $user->remember_token = Str::random(40);
+        $user->api_token = null;
+        $user->password = Hash::make('12345678');
+        $user->save();
+
+        Session::flash('success', 'Berhasil ! selamat reset password berhasil');
         return redirect('login');
     }
 }

@@ -26,10 +26,13 @@ Route::get('/', function () {
 Route::get('login',[Login::class,'pageIndex'])->name('login');
 Route::post('login/action',[Login::class,'login'])->name('actionLogin');
 
-
 Route::get('register',[Register::class,'index'])->name('pageRegister');
 Route::post('register/action',[Register::class,'register'])->name('actionregister');
 Route::get('verify-email/{token}', [Register::class, 'verifyEmail'])->name('verify-email');
+
+Route::get('forgot',[Register::class,'forgot'])->name('forgot');
+Route::post('forgot/action',[Register::class,'forgotaction'])->name('actionforgot');
+Route::get('forgot-email/{token}', [Register::class, 'verifyForgot'])->name('forgot-email');
 
 Route::get('logout',[Login::class,'logout'])->name('logout');
 
