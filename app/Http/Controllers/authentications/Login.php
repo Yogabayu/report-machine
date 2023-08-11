@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\authentications;
 
 use App\Http\Controllers\Controller;
+use App\Models\Profile;
 use App\Models\User;
 // use Illuminate\Support\Facades\Request;
 use Illuminate\Http\Request;
@@ -18,30 +19,36 @@ class Login extends Controller
 
     public function login(Request $request)
     {
-        // dd($request->all());
         try {
             $request->validate([
                 'email' => 'required|email',
                 'password' => 'required',
             ]);
-            $credential = $request->only('email', 'password');
-            if (Auth::attempt($credential)) {
+
+            $credentials = $request->only('email', 'password');
+
+            if (Auth::attempt($credentials)) {
                 $user = Auth::user();
+
                 if ($user->is_verified) {
-                    return redirect('dashboard');
+                    $isActive = Profile::where('user_id', $user->id)->where('status', 1)->first();
+
+                    if ($isActive) {
+                        return redirect('dashboard');
+                    } else {
+                        return redirect('login')->with('error', 'User status nonaktif, silahkan kontak admin terlebih dahulu');
+                    }
                 } else {
-                    Session::flash('error', 'User belum verifikasi email');
-                    return redirect('login');
+                    return redirect('login')->with('error', 'User belum verifikasi email');
                 }
             } else {
-                Session::flash('error', 'Email atau Password salah');
-                return redirect('login');
+                return redirect('login')->with('error', 'Email atau Password salah');
             }
         } catch (\Exception $e) {
-            Session::flash('error', $e->getMessage());
-            return redirect('login');
+            return redirect('login')->with('error', $e->getMessage());
         }
     }
+
 
     public function logout()
     {

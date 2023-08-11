@@ -11,6 +11,8 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
 
+use function PHPUnit\Framework\isNull;
+
 class ProfileController extends Controller
 {
     /**
@@ -21,26 +23,25 @@ class ProfileController extends Controller
     public function index()
     {
         $idUser = auth()->user();
-        $user = User::where('id',$idUser->id)->first();
+        $user = User::where('id', $idUser->id)->first();
 
         $cabang = Cabang::all();
-        $profile = Profile::where('id',$user->id)->first();
-        // dd($profile->cabang_id);
-        return view('content.web-pages.profile.settings',compact('user','cabang','profile'));
+        $profile = Profile::where('user_id', $user->id)->first();
+        return view('content.web-pages.profile.settings', compact('user', 'cabang', 'profile'));
     }
 
     public function authUpdate(Request $request)
     {
         try {
             $request->validate([
-                'id'=>['required'],
+                'id' => ['required'],
                 'email' => ['required'],
                 'password' => ['required'],
             ]);
 
-            $cekEmail = User::where('email',$request->email)->first();
+            $cekEmail = User::where('email', $request->email)->first();
             if ($cekEmail) {
-                Session::flash('error','Email sudah terdaftar sebelumnya');
+                Session::flash('error', 'Email sudah terdaftar sebelumnya');
                 return redirect('profile');
             }
 
@@ -59,7 +60,6 @@ class ProfileController extends Controller
 
     public function profileUpdate(Request $request)
     {
-        // dd($request->all());
         try {
             $request->validate([
                 'user_id' => ['required'],
@@ -71,17 +71,20 @@ class ProfileController extends Controller
                 'jenis_kelamin' => ['required'],
                 'telp' => ['required'],
                 'mariage' => ['required'],
-                'foto' => ['max:2048', 'mimes:jpg,jpeg,png'],
             ]);
 
-            $profile = new Profile;
+            $profile = Profile::where('user_id', $request->user_id)->first();
+            if (!$profile) {
+                $profile = new Profile();
+                $profile->user_id = $request->user_id;
+            }
 
             if ($request->hasFile('foto')) {
-                // $oldPhoto = $cabang->foto;
+                $oldPhoto = $profile->foto;
 
-                // if ($oldPhoto && File::exists(public_path('file/cabang/foto/' . $oldPhoto))) {
-                //     File::delete(public_path('file/cabang/foto/' . $oldPhoto));
-                // }
+                if ($oldPhoto && File::exists(public_path('file/profile/foto/' . $oldPhoto))) {
+                    File::delete(public_path('file/profile/foto/' . $oldPhoto));
+                }
 
                 $imageEXT   = $request->file('foto')->getClientOriginalName();
                 $filename   = pathinfo($imageEXT, PATHINFO_FILENAME);
@@ -92,7 +95,6 @@ class ProfileController extends Controller
                 $profile->foto = $fileimage;
             }
 
-            $profile->user_id = $request->user_id;
             $profile->cabang_id = $request->cabang_id;
             $profile->nama = $request->nama;
             $profile->level = $request->level ?? 3;
@@ -183,7 +185,7 @@ class ProfileController extends Controller
     {
         try {
             $user = auth()->user();
-            
+
             $profile = Profile::findOrFail($user->id);
             if ($profile->foto && File::exists(public_path('file/profile/foto/' . $profile->foto))) {
                 File::delete(public_path('file/profile/foto/' . $profile->foto));

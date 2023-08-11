@@ -9,10 +9,13 @@
 
     <!-- Responsive Table -->
     <div class="card">
-        <h5 class="card-header">Semua Cabang <a href="#" class="mx-5 btn btn-primary" data-toggle="modal"
-                data-target="#Insert">
+        <h5 class="card-header">Semua Cabang </h5>
+        <h6 class="card-subtitle text-muted">
+            <a href="#" class="mx-2 my-2 btn btn-primary" data-toggle="modal" data-target="#Insert">
                 <i class="menu-icon tf-icons bx bx-edit"></i> Tambah Cabang
-            </a></h5>
+            </a>
+        </h6>
+
         @if (session('success'))
             <div class="alert alert-success alert-dismissible fade show">
                 {{ session('success') }}

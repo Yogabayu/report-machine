@@ -180,9 +180,10 @@
 @endsection
 @section('js')
     <script>
-        document.addEventListener("DOMContentLoaded", function() {
+        $(document).ready(function() {
             const checkbox = document.getElementById("accountActivation");
             const button = document.querySelector(".deactivate-account");
+            button.disabled = true;
 
             checkbox.addEventListener("change", function() {
                 button.disabled = !this.checked;

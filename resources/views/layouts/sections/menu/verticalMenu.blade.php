@@ -23,8 +23,8 @@
                 <div>Dashboard</div>
             </a>
         </li>
-        <li class="menu-item {{ request()->is('users') ? 'active' : '' }}">
-            <a href="#" class="menu-link">
+        <li class="menu-item {{ request()->is('user') ? 'active' : '' }}">
+            <a href="{{ route('user.index') }}" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-user"></i>
                 <div>Users</div>
             </a>
