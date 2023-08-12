@@ -140,7 +140,7 @@
             @method('PUT')
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel2">Tambah Data User</h5>
+                    <h5 class="modal-title" id="exampleModalLabel2">Update Data User</h5>
                     <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -159,23 +159,29 @@
                             <select name="cabang_id" id="cabang_id" class="form-control" required>
                                 <option value="">== Pilih Cabang ==</option>
                                 @foreach ($cabangs as $cabang)
-                                    <option value="{{ $cabang->id }}">{{ $cabang->nama }}</option>
+                                    <option
+                                        value="{{ $cabang->id }}"@if ($user->cabang_id == $cabang->id) selected @else @endif>
+                                        {{ $cabang->nama }}</option>
                                 @endforeach
                             </select>
                         </div>
 
                         <div class="row mb-3">
                             <label for="nama" class="form-label">Nama</label>
-                            <input type="text" id="nama" name="nama" class="form-control">
+                            <input type="text" id="nama" name="nama" class="form-control"
+                                value="{{ $user->email }}">
                         </div>
 
                         <div class="row mb-3">
                             <label for="level" class="form-label">Level Akun</label>
                             <select name="level" id="level" class="form-control" required>
                                 <option value="">---</option>
-                                <option value="1">Superadmin</option>
-                                <option value="2">Admin</option>
-                                <option value="3">Teknisi</option>
+                                <option value="1" @if ($user->level == 1) selected @endif>Superadmin
+                                </option>
+                                <option value="2" @if ($user->level == 2) selected @endif>Admin
+                                </option>
+                                <option value="3" @if ($user->level == 3) selected @endif>Teknisi
+                                </option>
                             </select>
                         </div>
 
@@ -183,47 +189,58 @@
                             <label for="status" class="form-label">Status Akun</label>
                             <select name="status" id="status" class="form-control" required>
                                 <option value="">---</option>
-                                <option value="1">Aktif</option>
-                                <option value="0">Nonaktif</option>
+                                <option value="1" @if ($user->status == 1) selected @endif>Aktif
+                                </option>
+                                <option value="0" @if ($user->status == 0) selected @endif>Nonaktif
+                                </option>
                             </select>
                         </div>
 
                         <div class="row mb-3">
                             <label for="alamat" class="form-label">Alamat</label>
-                            <input type="text" id="alamat" name="alamat" class="form-control">
+                            <input type="text" id="alamat" name="alamat" class="form-control"
+                                value="{{ $user->alamat }}">
                         </div>
 
                         <div class="row mb-3">
                             <label for="umur" class="form-label">Umur</label>
-                            <input type="number" id="umur" name="umur" class="form-control">
+                            <input type="number" id="umur" name="umur" class="form-control"
+                                value="{{ $user->umur }}">
                         </div>
 
                         <div class="row mb-3">
                             <label for="pendidikan" class="form-label">Pendidikan Terakhir</label>
-                            <input type="text" id="pendidikan" name="pendidikan" class="form-control">
+                            <input type="text" id="pendidikan" name="pendidikan" class="form-control"
+                                value="{{ $user->pendidikan }}">
                         </div>
 
                         <div class="row mb-3">
                             <label for="jenis_kelamin" class="form-label">Jenis Kelamin</label>
                             <select name="jenis_kelamin" id="jenis_kelamin" class="form-control" required>
                                 <option value="">---</option>
-                                <option value="l">Laki-laki</option>
-                                <option value="p">Perempuan</option>
+                                <option value="l" @if ($user->jenis_kelamin == 'l') selected @endif>Laki-laki
+                                </option>
+                                <option value="p" @if ($user->jenis_kelamin == 'p') selected @endif>Perempuan
+                                </option>
                             </select>
                         </div>
 
                         <div class="row mb-3">
                             <label for="telp" class="form-label">Telp</label>
-                            <input type="number" id="telp" name="telp" class="form-control">
+                            <input type="number" id="telp" name="telp" class="form-control"
+                                value="{{ $user->telp }}">
                         </div>
 
                         <div class="row mb-3">
                             <label for="mariage" class="form-label">Status Pernikahan</label>
                             <select name="mariage" id="mariage" class="form-control" required>
                                 <option value="">---</option>
-                                <option value="1">Menikah</option>
-                                <option value="2">Belum menikah</option>
-                                <option value="3">Undefined</option>
+                                <option value="1" @if ($user->mariage == 1) selected @endif>Menikah
+                                </option>
+                                <option value="2" @if ($user->mariage == 2) selected @endif>Belum
+                                    menikah</option>
+                                <option value="3" @if ($user->mariage == 3) selected @endif>Undefined
+                                </option>
                             </select>
                         </div>
 

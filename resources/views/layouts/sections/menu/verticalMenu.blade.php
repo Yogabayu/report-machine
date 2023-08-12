@@ -38,7 +38,7 @@
             </a>
         </li>
         <li class="menu-item {{ request()->is('machines') ? 'active' : '' }}">
-            <a href="#" class="menu-link">
+            <a href="{{ route('machine.index') }}" class="menu-link">
                 <i class="menu-icon tf-icons bx bxl-steam"></i>
                 <div>Machine</div>
             </a>

@@ -42,7 +42,6 @@
                         <th>Desa</th>
                         <th>Nama</th>
                         <th>Alamat</th>
-                        <th>Foto</th>
                         <th>Aksi</th>
                     </tr>
                 </thead>
@@ -59,9 +58,6 @@
                             <td>{{ $cabang->village }}</td>
                             <td>{{ $cabang->nama }}</td>
                             <td>{{ $cabang->alamat }}</td>
-                            <td>
-                                <img src="{{ asset('file/cabang') }}/foto/{{ $cabang->foto }}" width="50%" />
-                            </td>
                             <td>
                                 <a href="{{ route('cabang.edit', ['cabang' => $cabang->id]) }}" class="mx-2 text-primary"
                                     data-toggle="modal" data-target="#Update{{ $cabang->id }}">

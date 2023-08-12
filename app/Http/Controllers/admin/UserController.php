@@ -24,14 +24,14 @@ class UserController extends Controller
     {
         try {
             $users = DB::table('users')
-                    ->leftJoin('profiles as p','p.user_id','=','users.id')
-                    ->leftJoin('cabangs as c','c.id','=','p.cabang_id')
-                    ->select('users.*','p.cabang_id','p.nama','p.level','p.status','p.alamat','p.umur','p.pendidikan','p.jenis_kelamin','p.telp','p.mariage','p.foto','c.nama as nama_cabang')
-                    ->get();
+                ->leftJoin('profiles as p', 'p.user_id', '=', 'users.id')
+                ->leftJoin('cabangs as c', 'c.id', '=', 'p.cabang_id')
+                ->select('users.*', 'p.cabang_id', 'p.nama', 'p.level', 'p.status', 'p.alamat', 'p.umur', 'p.pendidikan', 'p.jenis_kelamin', 'p.telp', 'p.mariage', 'p.foto', 'c.nama as nama_cabang')
+                ->get();
             $cabangs = Cabang::all();
-            return view('content.web-pages.user.index',compact('users','cabangs'));
+            return view('content.web-pages.user.index', compact('users', 'cabangs'));
         } catch (\Exception $e) {
-            Session::flash('error', 'gagal memuat halaman user'.$e->getMessage());
+            Session::flash('error', 'gagal memuat halaman user' . $e->getMessage());
             return back();
             // return view('content.web-pages.user.index');
         }
@@ -141,14 +141,13 @@ class UserController extends Controller
     {
         try {
             $request->validate([
-                'email'         => 'required|email|unique:users',
-                'password'      => 'required|min:8',
+                'email'         => 'required|email',
                 'cabang_id'     => 'required',
                 'nama'          => 'required',
                 'level'         => 'required',
                 'status'        => 'required',
                 'alamat'        => 'required',
-                'umur'          => 'required|number',
+                'umur'          => 'required',
                 'pendidikan'    => 'required',
                 'jenis_kelamin' => 'required',
                 'telp'          => 'required',
@@ -156,7 +155,7 @@ class UserController extends Controller
             ]);
 
             $user = User::findOrFail($id);
-            $profile = Profile::where('user_id',$id)->first();
+            $profile = Profile::where('user_id', $id)->first();
 
             if ($request->hasFile('foto')) {
                 $oldPhoto = $profile->foto;
@@ -172,9 +171,11 @@ class UserController extends Controller
                 $path       = $request->file('foto')->move(public_path('file/profile/foto'), $fileimage);
                 $profile->foto = $fileimage;
             }
+            if ($request->password) {
+                $user->password = Hash::make($request->password);
+            }
 
             $user->email = $request->email;
-            $user->password = Hash::make($request->password);
             $user->save();
 
             $profile->user_id = $user->id;
@@ -208,7 +209,7 @@ class UserController extends Controller
     {
         try {
             $user = User::findOrFail($id);
-            $profile = Profile::where('user_id',$id)->first();
+            $profile = Profile::where('user_id', $id)->first();
             if ($profile->foto && File::exists(public_path('file/profile/foto/' . $profile->foto))) {
                 File::delete(public_path('file/profile/foto/' . $profile->foto));
             }

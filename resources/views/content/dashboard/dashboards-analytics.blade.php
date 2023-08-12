@@ -83,7 +83,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <span>Sales</span>
+                            <span>Cabang</span>
                             <h3 class="card-title text-nowrap mb-1">{{ $totalCabang }}</h3>
                             {{-- <small class="text-success fw-semibold"><i class='bx bx-up-arrow-alt'></i> +28.42%</small> --}}
                         </div>

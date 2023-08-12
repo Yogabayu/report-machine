@@ -72,9 +72,9 @@
                             </td>
                             <td>
                                 @if ($user->status == 0)
-                                    Nonaktif
+                                    <span class="badge bg-danger">nonaktif</span>
                                 @elseif ($user->status == 1)
-                                    Aktif
+                                    <span class="badge bg-success">Aktif</span>
                                 @else
                                     -
                                 @endif
