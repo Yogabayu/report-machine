@@ -31,12 +31,16 @@
                 </a>
             </li>
         @endif
-        <li class="menu-item {{ request()->is('cabang') ? 'active' : '' }}">
-            <a href="{{ route('cabang.index') }}" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-map-pin"></i>
-                <div>Cabang</div>
-            </a>
-        </li>
+
+
+        @if (auth()->user()->profile->level == 1)
+            <li class="menu-item {{ request()->is('cabang') ? 'active' : '' }}">
+                <a href="{{ route('cabang.index') }}" class="menu-link">
+                    <i class="menu-icon tf-icons bx bx-map-pin"></i>
+                    <div>Cabang</div>
+                </a>
+            </li>
+        @endif
         <li class="menu-item {{ request()->is('machines') ? 'active' : '' }}">
             <a href="{{ route('machine.index') }}" class="menu-link">
                 <i class="menu-icon tf-icons bx bxl-steam"></i>

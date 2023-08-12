@@ -4,6 +4,7 @@ namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Cabang;
+use App\Models\Machine;
 use App\Models\Profile;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
@@ -18,8 +19,8 @@ class Analytics extends Controller
             $profile = Profile::where('user_id',$user->id)->first();
             $totalUser = User::count();
             $totalCabang = Cabang::count();
-            // dd($cabang);
-            return view('content.dashboard.dashboards-analytics',compact('user','profile','totalUser','totalCabang'));
+            $totalMachine = Machine::count();
+            return view('content.dashboard.dashboards-analytics',compact('user','profile','totalUser','totalCabang','totalMachine'));
         } else {
             Session::flash('error', 'You are not login yet');
             return redirect('login');
