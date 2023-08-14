@@ -919,9 +919,9 @@
 
     <!--NAV-->
     <nav class="flex">
-        <figure class="logo"><img
-                src="https://yogabayuap.com/wp-content/uploads/2022/12/cropped-cropped-cropped-Untitled-1-removebg-preview-1-e1671589794331.png"
-                alt="LOGO." /></figure>
+        <figure class="logo">
+            <img src="{{ asset('file/site') }}/foto/{{ $data->logo }}" alt="logo" style="width:100px" />
+        </figure>
         {{-- <a href="#" class="ham" onclick="closer()"> --}}
         </a>
     </nav>
@@ -951,7 +951,7 @@
            background-position: center;
           ">
         <article>
-            <h1 class="title big"> <em>Reporting Machine</em> untuk kebutuhan anda<em>.</em> </h1>
+            <h1 class="title big"> <em>{{ $data->name_site }}</em> untuk kebutuhan anda<em>.</em> </h1>
             <p>Reporting Machine adalah alat laporan yang memenuhi kebutuhan Anda. Dikembangkan untuk memberikan solusi
                 yang tepat dan efisien dalam pembuatan laporan. Dengan fitur canggih dan antarmuka yang mudah digunakan,
                 Reporting Machine membantu Anda menghasilkan laporan berkualitas tinggi dengan mudah.</p>

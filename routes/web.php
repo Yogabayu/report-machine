@@ -9,6 +9,7 @@ use App\Http\Controllers\admin\MachineController;
 use App\Http\Controllers\admin\WebsiteController;
 use App\Http\Controllers\admin\SparepartsController;
 use App\Http\Controllers\admin\UserController;
+use App\Http\Controllers\MainController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -22,9 +23,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
+
+Route::get('/',[MainController::class,'index']);
 
 /* auth */
 Route::get('login',[Login::class,'pageIndex'])->name('login');
