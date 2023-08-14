@@ -6,6 +6,7 @@ use App\Http\Controllers\authentications\Register;
 use App\Http\Controllers\admin\Analytics;
 use App\Http\Controllers\admin\CabangController;
 use App\Http\Controllers\admin\MachineController;
+use App\Http\Controllers\admin\WebsiteController;
 use App\Http\Controllers\admin\SparepartsController;
 use App\Http\Controllers\admin\UserController;
 use Illuminate\Support\Facades\Route;
@@ -41,6 +42,10 @@ Route::get('logout',[Login::class,'logout'])->name('logout');
 
 Route::middleware('auth')->group(function (){
     Route::get('dashboard', [Analytics::class,'index'])->name('dashboard-analytics');
+
+    //site controller
+    Route::get('websetting',[WebsiteController::class,'index'])->name('websetting.index');
+    Route::put('websetting/put',[WebsiteController::class,'update'])->name('websetting.update');
 
     //user
     Route::resource('user',UserController::class);
