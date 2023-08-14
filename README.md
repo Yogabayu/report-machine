@@ -29,7 +29,7 @@ Install this project with git
 
   npm install && npm run dev
 
-  php artisan db:seed --class=UsersTableSeeder
+  php artisan db:seed --class=SiteTableSeeder
 
   php artisan serve
 
