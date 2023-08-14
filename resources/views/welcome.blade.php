@@ -7,7 +7,7 @@
 
     <!--SHORTCUT ICON-->
     <link rel="shortcut icon"
-        href="https://yogabayuap.com/wp-content/uploads/2022/12/cropped-Untitled-1-removebg-preview-32x32.png" />
+        href="{{ asset('file/site') }}/foto/{{ $data->logo }}" />
 
     {{-- META TAGS --}}
     <meta charset="UTF-8" />
