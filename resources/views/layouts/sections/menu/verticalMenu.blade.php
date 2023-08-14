@@ -41,14 +41,14 @@
                 </a>
             </li>
         @endif
-        <li class="menu-item {{ request()->is('machines') ? 'active' : '' }}">
+        <li class="menu-item {{ request()->is('machine') ? 'active' : '' }}">
             <a href="{{ route('machine.index') }}" class="menu-link">
                 <i class="menu-icon tf-icons bx bxl-steam"></i>
                 <div>Machine</div>
             </a>
         </li>
-        <li class="menu-item {{ request()->is('spareparts') ? 'active' : '' }}">
-            <a href="#" class="menu-link">
+        <li class="menu-item {{ request()->is('sparepart') ? 'active' : '' }}">
+            <a href="{{ route('sparepart.index') }}" class="menu-link">
                 <i class="menu-icon tf-icons bx bxs-brightness"></i>
                 <div>Spareparts</div>
             </a>

@@ -6,6 +6,7 @@ use App\Http\Controllers\authentications\Register;
 use App\Http\Controllers\admin\Analytics;
 use App\Http\Controllers\admin\CabangController;
 use App\Http\Controllers\admin\MachineController;
+use App\Http\Controllers\admin\SparepartsController;
 use App\Http\Controllers\admin\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -55,6 +56,9 @@ Route::middleware('auth')->group(function (){
 
     //machine
     Route::resource('machine', MachineController::class);
+
+    //sparepart
+    Route::resource('sparepart',SparepartsController::class);
 });
 
 

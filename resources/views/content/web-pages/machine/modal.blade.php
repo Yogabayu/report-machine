@@ -7,7 +7,7 @@
             </div>
             <div class="modal-body">
                 <div class="col">
-                    <div class="row mb-3">
+                    <div class="row mb-3 justify-content-center">
                         <label for="foto" class="form-label">Foto</label>
                         <img src="{{ asset('file/machine') }}/foto/{{ $machine->photo }}" class="justify-content-center"
                             style="width: 500px" />
