@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Cabang;
 use App\Models\Machine;
 use App\Models\Profile;
+use App\Models\Sparepart;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
@@ -20,7 +21,8 @@ class Analytics extends Controller
             $totalUser = User::count();
             $totalCabang = Cabang::count();
             $totalMachine = Machine::count();
-            return view('content.dashboard.dashboards-analytics',compact('user','profile','totalUser','totalCabang','totalMachine'));
+            $totalSparepart = Sparepart::count();
+            return view('content.dashboard.dashboards-analytics',compact('user','profile','totalUser','totalCabang','totalMachine','totalSparepart'));
         } else {
             Session::flash('error', 'You are not login yet');
             return redirect('login');
