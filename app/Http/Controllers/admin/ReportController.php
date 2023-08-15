@@ -3,8 +3,11 @@
 namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Report;
+use App\Models\Sparepart;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\File;
 
 class ReportController extends Controller
 {
@@ -26,11 +29,104 @@ class ReportController extends Controller
             if ($user->profile->level!=1) {
                 $riwayatsQuery->where('reports.cabang_id',$user->profile->cabang_id);
             }
+            $riwayatsQuery->where('reports.spareparts_id',$id);
             $riwayats = $riwayatsQuery->get();
-            // dd($riwayats);
             return view('content.web-pages.sparepart.report.index',compact('detail','riwayats'));
         } catch (\Exception $e) {
             return back()->with('error',$e->getMessage());
+        }
+    }
+
+    public function store(Request $request)
+    {
+        try {
+            $request->validate([
+                'spareparts_id' => 'required',
+                'judul'         => 'required',
+                'desc'          => 'required',
+                'foto'          => ['required','max:2048', 'mimes:jpg,jpeg,png'],
+            ]);
+
+            $imageEXT   = $request->file('foto')->getClientOriginalName();
+            $filename   = pathinfo($imageEXT, PATHINFO_FILENAME);
+            $EXT        = $request->file('foto')->getClientOriginalExtension();
+            $fileimage  = $filename . '_' . time() . '.' . $EXT;
+            $path       = $request->file('foto')->move(public_path('file/report/foto'), $fileimage);
+
+            $sparepart = Sparepart::findOrFail($request->spareparts_id);
+            $user      = auth()->user();
+
+            $report = new Report();
+            $report->user_id = $user->id;
+            $report->cabang_id = $sparepart->cabang_id;
+            $report->machine_id = $sparepart->machine_id;
+            $report->spareparts_id = $request->spareparts_id;
+            $report->judul = $request->judul;
+            $report->desc = $request->desc;
+            $report->foto = $fileimage;
+            $report->save();
+
+            return back()->with('success','Berhasil menambahkan data');
+        } catch (\Exception $e) {
+            return back()->with('error',$e->getMessage());
+        }
+    }
+
+    public function update(Request $request)
+    {
+        try {
+            $request->validate([
+                'id'            => 'required',
+                'user_id'       => 'required',
+                'cabang_id'     => 'required',
+                'machine_id'    => 'required',
+                'spareparts_id' => 'required',
+                'judul'         => 'required',
+                'desc'          => 'required',
+                'foto'          => ['max:2048', 'mimes:jpg,jpeg,png'],
+            ]);
+
+            $report = Report::findOrFail($request->id);
+
+            if ($request->hasFile('foto')) {
+                $oldFile = $report->foto;
+                if ($oldFile && File::exists(public_path('file/report/foto/' . $oldFile))) {
+                    File::delete(public_path('file/report/foto/' . $oldFile));
+                }
+
+                $imageEXT   = $request->file('foto')->getClientOriginalName();
+                $filename   = pathinfo($imageEXT, PATHINFO_FILENAME);
+                $EXT        = $request->file('foto')->getClientOriginalExtension();
+                $fileimage  = $filename . '_' . time() . '.' . $EXT;
+                $path       = $request->file('foto')->move(public_path('file/report/foto'), $fileimage);
+                $report->foto = $fileimage;
+            }
+
+            $report->user_id        = $request->user_id;
+            $report->cabang_id      = $request->cabang_id;
+            $report->machine_id     = $request->machine_id;
+            $report->spareparts_id  = $request->spareparts_id;
+            $report->judul          = $request->judul;
+            $report->desc          = $request->desc;
+            $report->save();
+
+            return back()->with('success','Berhasil update data');
+        } catch (\Exception $e) {
+            return back()->with('error',$e->getMessage());
+        }
+    }
+
+    public function destroy($id)
+    {
+        try {
+            $report = Report::findOrFail($id);
+            if ($report->foto && File::exists(public_path('file/report/foto/' . $report->foto))) {
+                File::delete(public_path('file/report/foto/' . $report->foto));
+            }
+            $report->delete();
+            return back()->with('success', 'Berhasil menghapus data');
+        } catch (\Exception $e) {
+            return back()->with('error','Error'.$e->getMessage());
         }
     }
 }

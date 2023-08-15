@@ -68,6 +68,9 @@ Route::middleware('auth')->group(function (){
 
     //report
     Route::get('report/{id}',[ReportController::class,'index'])->name('report_index');
+    Route::post('reportpost',[ReportController::class,'store'])->name('report_post');
+    Route::put('reportupdate/{id}',[ReportController::class,'update'])->name('report_update');
+    Route::delete('reportdelete/{id}',[ReportController::class,'destroy'])->name('report_delete');
 });
 
 

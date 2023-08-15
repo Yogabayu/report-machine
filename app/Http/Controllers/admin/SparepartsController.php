@@ -81,7 +81,7 @@ class SparepartsController extends Controller
             $sparepart->photo = $fileimage;
             $sparepart->save();
 
-            return redirect('sparepart')->with('success', 'Sukses !! berhasil menambahkan sparepart');
+            return back()->with('success', 'Sukses !! berhasil menambahkan sparepart');
         } catch (\Exception $e) {
             return redirect('sparepart')->with('error', $e->getMessage());
         }
