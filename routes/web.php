@@ -6,6 +6,7 @@ use App\Http\Controllers\authentications\Register;
 use App\Http\Controllers\admin\Analytics;
 use App\Http\Controllers\admin\CabangController;
 use App\Http\Controllers\admin\MachineController;
+use App\Http\Controllers\admin\ReportController;
 use App\Http\Controllers\admin\WebsiteController;
 use App\Http\Controllers\admin\SparepartsController;
 use App\Http\Controllers\admin\UserController;
@@ -64,6 +65,9 @@ Route::middleware('auth')->group(function (){
 
     //sparepart
     Route::resource('sparepart',SparepartsController::class);
+
+    //report
+    Route::get('report/{id}',[ReportController::class,'index'])->name('report_index');
 });
 
 

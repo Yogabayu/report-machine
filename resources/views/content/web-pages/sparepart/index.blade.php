@@ -45,11 +45,15 @@
                                     title="Edit detail sparepart">
                                     <i class="menu-icon tf-icons bx bx-edit"></i>
                                 </a>
-                                <a href="#" class="mx-2 text-warning" data-toggle="modal"
+                                <a href="{{ route('report_index', $sparepart->id) }}" class="mx-2 text-primary"
+                                    data-toggle="tooltip" data-placement="top" title="detail sparepart">
+                                    <i class="menu-icon tf-icons bx bx-show"></i>
+                                </a>
+                                {{-- <a href="#" class="mx-2 text-warning" data-toggle="modal"
                                     data-target="#Show{{ $sparepart->id }}" data-toggle="tooltip" data-placement="top"
                                     title="Lihat detail sparepart">
                                     <i class="menu-icon tf-icons bx bx-show"></i>
-                                </a>
+                                </a> --}}
                                 <a href="#" class="mx-2 text-danger" data-toggle="modal"
                                     data-target="#Delete{{ $sparepart->id }}" data-toggle="tooltip" data-placement="top"
                                     title="Hapus sparepart">
