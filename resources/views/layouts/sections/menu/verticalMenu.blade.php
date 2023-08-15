@@ -30,10 +30,12 @@
                     <div>Users</div>
                 </a>
             </li>
-        @endif
-
-
-        @if (auth()->user()->profile->level == 1)
+            <li class="menu-item {{ request()->is('websetting') ? 'active' : '' }}">
+                <a href="{{ route('websetting.index') }}" class="menu-link">
+                    <i class="menu-icon tf-icons bx bx-sitemap"></i>
+                    <div>Website Setting</div>
+                </a>
+            </li>
             <li class="menu-item {{ request()->is('cabang') ? 'active' : '' }}">
                 <a href="{{ route('cabang.index') }}" class="menu-link">
                     <i class="menu-icon tf-icons bx bx-map-pin"></i>
@@ -42,14 +44,7 @@
             </li>
         @endif
 
-        @if (auth()->user()->profile->level == 1)
-            <li class="menu-item {{ request()->is('websetting') ? 'active' : '' }}">
-                <a href="{{ route('websetting.index') }}" class="menu-link">
-                    <i class="menu-icon tf-icons bx bx-sitemap"></i>
-                    <div>Website Setting</div>
-                </a>
-            </li>
-        @endif
+
         <li class="menu-item {{ request()->is('machine') ? 'active' : '' }}">
             <a href="{{ route('machine.index') }}" class="menu-link">
                 <i class="menu-icon tf-icons bx bxl-steam"></i>

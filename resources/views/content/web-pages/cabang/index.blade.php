@@ -16,21 +16,6 @@
             </a>
         </h6>
 
-        @if (session('success'))
-            <div class="alert alert-success alert-dismissible fade show">
-                {{ session('success') }}
-                <button type="button" class="btn-close" data-dismiss="alert" aria-label="Close">
-                </button>
-            </div>
-        @endif
-        @if (session('error'))
-            <div class="alert alert-danger alert-dismissible fade show">
-                {{ session('error') }}
-                <button type="button" class="btn-close" data-dismiss="alert" aria-label="Close">
-                </button>
-            </div>
-        @endif
-
         <div class="table-responsive text-nowrap">
             <table class="table table-hover zero-configuration">
                 <thead>
@@ -92,7 +77,7 @@
                     <div class="col">
                         <div class="row mb-3">
                             <label for="provinsi_code" class="form-label">Provinsi</label>
-                            <select name="provinsi_code" id="provinsi_code" class="form-control" required>
+                            <select name="provinsi_code" id="provinsi_code_insert" class="form-control" required>
                                 <option value="">== Pilih Provinsi ==</option>
                                 @foreach ($provinces as $province)
                                     <option value="{{ $province->code }}">{{ $province->name }}</option>
@@ -102,20 +87,17 @@
 
                         <div class="row mb-3">
                             <label for="kota_code" class="form-label">Kota</label>
-                            <select name="kota_code" id="kota_code" class="form-control" required>
-                                <option value="">== Pilih Kota ==</option>
+                            <select name="kota_code" id="kota_code_insert" class="form-control" required>
                             </select>
                         </div>
                         <div class="row mb-3">
                             <label for="kecamatan_code" class="form-label">Kecamatan</label>
-                            <select name="kecamatan_code" id="kecamatan_code" class="form-control" required>
-                                <option value="">== Pilih Kecamatan ==</option>
+                            <select name="kecamatan_code" id="kecamatan_code_insert" class="form-control" required>
                             </select>
                         </div>
                         <div class="row mb-3">
                             <label for="desa_code" class="form-label">Desa</label>
-                            <select name="desa_code" id="desa_code" class="form-control" required>
-                                <option value="">== Pilih Desa ==</option>
+                            <select name="desa_code" id="desa_code_insert" class="form-control" required>
                             </select>
                         </div>
                         <div class="row mb-3">
@@ -149,13 +131,62 @@
             var districtByCity = @json($districts);
             var villageByDistrict = @json($village);
 
+
+            var provinsiSelect_insert = document.getElementById('provinsi_code_insert');
+            var kotaSelect_insert = document.getElementById('kota_code_insert');
+            var kecamatanSelect_insert = document.getElementById('kecamatan_code_insert');
+            var desaSelect_insert = document.getElementById('desa_code_insert');
+
+            provinsiSelect_insert.addEventListener('change', function() {
+                var selectedProvinceId_insert = provinsiSelect_insert.value;
+
+                kotaSelect_insert.innerHTML = '<option value="">== Pilih Kota ==</option>';
+                citiesByProvince.forEach(function(city) {
+                    if (city.province_code == selectedProvinceId_insert) {
+                        var option = document.createElement('option');
+                        option.value = city.code;
+                        option.textContent = city.name;
+                        kotaSelect_insert.appendChild(option);
+                    }
+                });
+            });
+
+            kotaSelect_insert.addEventListener('change', function() {
+                var selectedCityId_insert = kotaSelect_insert.value;
+                kecamatanSelect_insert.innerHTML = '<option value="">== Pilih Kota ==</option>';
+                districtByCity.forEach(function(district) {
+                    if (district.city_code == selectedCityId_insert) {
+                        var option = document.createElement('option');
+                        option.value = district.code;
+                        option.textContent = district.name;
+                        kecamatanSelect_insert.appendChild(option);
+                    }
+                });
+            });
+
+            kecamatanSelect_insert.addEventListener('change', function() {
+                var selectedKecamatanId_insert = kecamatanSelect_insert.value;
+                desaSelect_insert.innerHTML = '<option value="">== Pilih Kota ==</option>';
+                villageByDistrict.forEach(function(village) {
+                    if (village.district_code == selectedKecamatanId_insert) {
+                        var option = document.createElement('option');
+                        option.value = village.code;
+                        option.textContent = village.name;
+                        desaSelect_insert.appendChild(option);
+                    }
+                });
+            });
+
+
             var provinsiSelect = document.getElementById('provinsi_code');
             var kotaSelect = document.getElementById('kota_code');
             var kecamatanSelect = document.getElementById('kecamatan_code');
             var desaSelect = document.getElementById('desa_code');
 
             provinsiSelect.addEventListener('change', function() {
+                kotaSelect.innerHTML = '';
                 var selectedProvinceId = provinsiSelect.value;
+                console.log(selectedProvinceId);
 
                 kotaSelect.innerHTML = '<option value="">== Pilih Kota ==</option>';
                 citiesByProvince.forEach(function(city) {

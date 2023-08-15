@@ -49,11 +49,9 @@ class ProfileController extends Controller
             $user->password = Hash::make($request->password);
             $user->save();
 
-            Session::flash('success', 'Update Autentikasi berhasil');
-            return redirect('profile');
+            return redirect('profile')->with('success', 'Update Autentikasi berhasil');
         } catch (\Exception $e) {
-            Session::flash('error', 'Error please inform administrator immediately: ' . $e->getMessage());
-            return redirect('profile');
+            return redirect('profile')->with('error', 'Error please inform administrator immediately: ' . $e->getMessage());
         }
     }
 
@@ -106,11 +104,9 @@ class ProfileController extends Controller
             $profile->mariage = $request->mariage;
             $profile->save();
 
-            Session::flash('success', 'Berhasil Update Data Profile');
-            return redirect('profile');
+            return redirect('profile')->with('success', 'Berhasil Update Data Profile');
         } catch (\Exception $e) {
-            Session::flash('error', 'Error please inform administrator immediately: ' . $e->getMessage());
-            return redirect('profile');
+            return redirect('profile')->with('error', 'Error please inform administrator immediately: ' . $e->getMessage());
         }
     }
 
@@ -192,11 +188,9 @@ class ProfileController extends Controller
             $profile->delete();
             $user->delete();
 
-            Session::flash('success', 'Sukses menghapus account');
-            return redirect('login');
+            return redirect('login')->with('success', 'Sukses menghapus account');
         } catch (\Exception $e) {
-            Session::flash('error', $e->getMessage());
-            return back();
+            return back()->with('error', $e->getMessage());
         }
     }
 }

@@ -9,6 +9,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Session;
+use RealRashid\SweetAlert\Facades\Alert;
+// Use Alert;
+
 
 class MachineController extends Controller
 {
@@ -33,8 +36,7 @@ class MachineController extends Controller
             $cabangs = Cabang::all();
             return view('content.web-pages.machine.index', compact('machines', 'cabangs'));
         } catch (\Exception $e) {
-            Session::flash('error', 'gagal memuat halaman user' . $e->getMessage());
-            return back();
+            return back()->with('error', 'gagal memuat halaman user' . $e->getMessage());
         }
     }
 
@@ -75,11 +77,9 @@ class MachineController extends Controller
             $machine->photo = $fileimage;
             $machine->save();
 
-            Session::flash('success', 'Sukses !! berhasil menambahkan mesin');
-            return redirect('machine');
+            return redirect('machine')->with('success','Sukses !! berhasil menambah mesin');
         } catch (\Exception $e) {
-            Session::flash('error', $e->getMessage());
-            return redirect('machine');
+            return redirect('machine')->with('error', $e->getMessage());;
         }
     }
 
@@ -136,11 +136,9 @@ class MachineController extends Controller
             $machine->nama = $request->nama;
             $machine->save();
 
-            Session::flash('success', 'Sukses !! berhasil Update mesin');
-            return redirect('machine');
+            return redirect('machine')->with('success', 'Sukses !! berhasil Update mesin');
         } catch (\Exception $e) {
-            Session::flash('error', $e->getMessage());
-            return redirect('machine');
+            return redirect('machine')->with('error', $e->getMessage());
         }
     }
 
@@ -158,11 +156,9 @@ class MachineController extends Controller
                 File::delete(public_path('file/machine/foto/' . $machine->photo));
             }
             $machine->delete();
-            Session::flash('success', 'Berhasil menghapus mesin');
-            return redirect('machine');
+            return redirect('machine')->with('success', 'Berhasil menghapus mesin');
         } catch (\Exception $e) {
-            Session::flash('error', 'Error please inform administrator immediately: ' . $e->getMessage());
-            return redirect('machine');
+            return redirect('machine')->with('error', 'Error please inform administrator immediately: ' . $e->getMessage());
         }
     }
 }

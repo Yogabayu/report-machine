@@ -21,20 +21,7 @@
                 <li class="nav-item"><a class="nav-link" href="{{ url('pages/account-settings-connections') }}"><i
                             class="bx bx-link-alt me-1"></i> Connections</a></li>
             </ul> --}}
-            @if (session('success'))
-                <div class="alert alert-success alert-dismissible fade show">
-                    {{ session('success') }}
-                    <button type="button" class="btn-close" data-dismiss="alert" aria-label="Close">
-                    </button>
-                </div>
-            @endif
-            @if (session('error'))
-                <div class="alert alert-danger alert-dismissible fade show">
-                    {{ session('error') }}
-                    <button type="button" class="btn-close" data-dismiss="alert" aria-label="Close">
-                    </button>
-                </div>
-            @endif
+
             <div class="card mb-4">
                 <h5 class="card-header">Authentication</h5>
                 <hr class="my-0">

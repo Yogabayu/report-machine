@@ -37,8 +37,7 @@ class SparepartsController extends Controller
 
             return view('content.web-pages.sparepart.index', compact('spareparts', 'machines', 'cabangs'));
         } catch (\Exception $e) {
-            Session::flash('error', $e->getMessage());
-            return back();
+            return back()->with('error', $e->getMessage());
         }
     }
 
@@ -82,11 +81,9 @@ class SparepartsController extends Controller
             $sparepart->photo = $fileimage;
             $sparepart->save();
 
-            Session::flash('success', 'Sukses !! berhasil menambahkan sparepart');
-            return redirect('sparepart');
+            return redirect('sparepart')->with('success', 'Sukses !! berhasil menambahkan sparepart');
         } catch (\Exception $e) {
-            Session::flash('error', $e->getMessage());
-            return redirect('sparepart');
+            return redirect('sparepart')->with('error', $e->getMessage());
         }
     }
 
@@ -153,11 +150,9 @@ class SparepartsController extends Controller
             $sparepart->nama = $request->nama;
             $sparepart->save();
 
-            Session::flash('success', 'Sukses !! berhasil update sparepart');
-            return redirect('sparepart');
+            return redirect('sparepart')->with('success', 'Sukses !! berhasil update sparepart');
         } catch (\Exception $e) {
-            Session::flash('error', $e->getMessage());
-            return redirect('sparepart');
+            return redirect('sparepart')->with('error', $e->getMessage());
         }
     }
 
@@ -175,11 +170,9 @@ class SparepartsController extends Controller
                 File::delete(public_path('file/sparepart/foto/' . $sparepart->photo));
             }
             $sparepart->delete();
-            Session::flash('success', 'Berhasil menghapus sparepart');
-            return redirect('sparepart');
+            return redirect('sparepart')->with('success', 'Berhasil menghapus sparepart');
         } catch (\Exception $e) {
-            Session::flash('error','Error'.$e->getMessage());
-            return redirect('sparepart');
+            return redirect('sparepart')->with('error','Error'.$e->getMessage());
         }
     }
 }

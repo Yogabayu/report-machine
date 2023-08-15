@@ -57,11 +57,9 @@ class WebsiteController extends Controller
             $site->tlp = $request->tlp;
             $site->save();
 
-            Session::flash('success','Berhasil update data');
-            return redirect('websetting');
+            return redirect('websetting')->with('success','Berhasil update data');
         } catch (\Exception $e) {
-            Session::flash('error','error: '.$e->getMessage());
-            return back();
+            return back()->with('error','error: '.$e->getMessage());
         }
         
     }

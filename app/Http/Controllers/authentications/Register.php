@@ -26,8 +26,7 @@ class Register extends Controller
             
             $cekEmail = User::where('email',$request->email)->first();
             if ($cekEmail) {
-                Session::flash('error','Email sudah terdaftar sebelumnya');
-                return redirect('register');
+                return redirect('register')->with('error','Email sudah terdaftar sebelumnya');
             }
 
             $user = new User();
@@ -39,11 +38,9 @@ class Register extends Controller
             $user->save();
             $this->sendVerificationEmail($user);
 
-            Session::flash('success', 'Register Berhasil. Silahkan cek inbox email untuk mengaktifkan akun');
-            return redirect('register');
+            return redirect('register')->with('success', 'Register Berhasil. Silahkan cek inbox email untuk mengaktifkan akun');
         } catch (\Exception $e) {
-            Session::flash('error', $e->getMessage());
-            return redirect('register');
+            return redirect('register')->with('error', $e->getMessage());
         }
     }
 
@@ -63,13 +60,11 @@ class Register extends Controller
         $user = User::where('verification_token', $token)->first();
 
         if (!$user) {
-            Session::flash('error', 'token tidak valid');
-            return redirect('login');
+            return redirect('login')->with('error', 'token tidak valid');
         }
 
         if ($user->api_token < now()) {
-            Session::flash('error','Token sudah kadaluwarsa');
-            return redirect('login');
+            return redirect('login')->with('error','Token sudah kadaluwarsa');
         }
 
         // Mark the user as verified
@@ -78,8 +73,7 @@ class Register extends Controller
         $user->api_token = null;
         $user->save();
 
-        Session::flash('success', 'Berhasil ! selamat akun anda sudah aktif');
-        return redirect('login');
+        return redirect('login')->with('success', 'Berhasil ! selamat akun anda sudah aktif');
     }
 
     public function forgot()
@@ -96,8 +90,7 @@ class Register extends Controller
             
             $cekEmail = User::where('email',$request->email)->first();
             if (!$cekEmail) {
-                Session::flash('error','Email tidak terdaftar');
-                return redirect('forgot');
+                return redirect('forgot')->with('error','Email tidak terdaftar');
             }
             
             $cekEmail->api_token = Str::random(40);
@@ -105,11 +98,9 @@ class Register extends Controller
 
             $this->sendForgotEmail($cekEmail);
 
-            Session::flash('success', 'Link reset berhasil dibuat, silahkan cek inbox/spam di email anda');
-            return redirect('forgot');
+            return redirect('forgot')->with('success', 'Link reset berhasil dibuat, silahkan cek inbox/spam di email anda');
         } catch (\Exception $e) {
-            Session::flash('error', $e->getMessage());
-            return redirect('forgot');
+            return redirect('forgot')->with('error', $e->getMessage());
         }
     }
 
@@ -129,13 +120,11 @@ class Register extends Controller
         $user = User::where('remember_token', $token)->first();
 
         if (!$user) {
-            Session::flash('error', 'token tidak valid');
-            return redirect('login');
+            return redirect('login')->with('error', 'token tidak valid');
         }
 
         if ($user->api_token < now()) {
-            Session::flash('error','Token sudah kadaluwarsa');
-            return redirect('login');
+            return redirect('login')->with('error','Token sudah kadaluwarsa');
         }
 
         // Mark the user as verified
@@ -144,7 +133,6 @@ class Register extends Controller
         $user->password = Hash::make('12345678');
         $user->save();
 
-        Session::flash('success', 'Berhasil ! selamat reset password berhasil');
-        return redirect('login');
+        return redirect('login')->with('success', 'Berhasil ! selamat reset password berhasil');
     }
 }

@@ -20,15 +20,51 @@
     <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="{{ asset('assets/img/favicon/favicon.ico') }}" />
 
+    <!-- custom -->
+    <link rel="stylesheet" type="text/css"
+        href="{{ asset('assets') }}/app-assets/vendors/css/tables/datatable/datatables.min.css">
+    <link rel="stylesheet" href="{{ asset('assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css') }}" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.0/dist/sweetalert2.min.css">
+    <style>
+        .colored-toast.swal2-icon-success {
+            background-color: #a5dc86 !important;
+        }
+
+        .colored-toast.swal2-icon-error {
+            background-color: #f27474 !important;
+        }
+
+        .colored-toast.swal2-icon-warning {
+            background-color: #f8bb86 !important;
+        }
+
+        .colored-toast.swal2-icon-info {
+            background-color: #3fc3ee !important;
+        }
+
+        .colored-toast.swal2-icon-question {
+            background-color: #87adbd !important;
+        }
+
+        .colored-toast .swal2-title {
+            color: white;
+        }
+
+        .colored-toast .swal2-close {
+            color: white;
+        }
+
+        .colored-toast .swal2-html-container {
+            color: white;
+        }
+    </style>
     <!-- Include Styles -->
     @include('layouts/sections/styles')
 
     <!-- Include Scripts for customizer, helper, analytics, config -->
     @include('layouts/sections/scriptsIncludes')
 
-    <!-- custom -->
-    <link rel="stylesheet" type="text/css"
-        href="{{ asset('assets') }}/app-assets/vendors/css/tables/datatable/datatables.min.css">
+    @include('sweetalert::alert')
 
     @yield('css')
 </head>
@@ -69,11 +105,70 @@
     <script src="{{ asset('assets') }}/app-assets/js/scripts/pages/dashboard-analytics.js"></script>
     <script src="{{ asset('assets') }}/app-assets/js/scripts/pages/app-user.js"></script>
     <script src="{{ asset('assets') }}/app-assets/js/scripts/pages/invoice.js"></script>
+
+    <script src="{{ asset('assets/vendor/js/menu.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.0/dist/sweetalert2.min.js"></script>
+
     <script>
         $(function() {
             $('[data-toggle="tooltip"]').tooltip()
         })
     </script>
+    @if (session()->has('success'))
+        <script>
+            const Toast = Swal.mixin({
+                toast: true,
+                position: 'bottom-right',
+                iconColor: 'white',
+                customClass: {
+                    popup: 'colored-toast'
+                },
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true
+            })
+            Toast.fire({
+                icon: 'success',
+                title: "{{ session('success') }}"
+            })
+        </script>
+    @elseif (session()->has('error'))
+        <script>
+            const Toast = Swal.mixin({
+                toast: true,
+                position: 'bottom-right',
+                iconColor: 'white',
+                customClass: {
+                    popup: 'colored-toast'
+                },
+                showConfirmButton: true,
+                timer: 3000,
+                timerProgressBar: true
+            })
+            Toast.fire({
+                icon: 'error',
+                title: "{{ session('error') }}"
+            })
+        </script>
+    @elseif (session()->has('info'))
+        <script>
+            const Toast = Swal.mixin({
+                toast: true,
+                position: 'bottom-right',
+                iconColor: 'white',
+                customClass: {
+                    popup: 'colored-toast'
+                },
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true
+            })
+            Toast.fire({
+                icon: 'info',
+                title: "{{ session('info') }}"
+            })
+        </script>
+    @endif
     @yield('js')
 </body>
 

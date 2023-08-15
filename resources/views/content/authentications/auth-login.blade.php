@@ -26,21 +26,6 @@
                         <h4 class="mb-2">Welcome to {{ config('variables.templateName') }}! 👋</h4>
                         <p class="mb-4">Please sign-in to your account</p>
 
-                        @if (session('success'))
-                            <div class="alert alert-success alert-dismissible fade show">
-                                {{ session('success') }}
-                                <button type="button" class="btn-close" data-dismiss="alert" aria-label="Close">
-                                </button>
-                            </div>
-                        @endif
-                        @if (session('error'))
-                            <div class="alert alert-danger alert-dismissible fade show">
-                                {{ session('error') }}
-                                <button type="button" class="btn-close" data-dismiss="alert" aria-label="Close">
-                                </button>
-                            </div>
-                        @endif
-
                         <form id="formAuthentication" class="mb-3" action="{{ route('actionLogin') }}" method="POST">
                             @csrf
                             <div class="mb-3">

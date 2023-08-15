@@ -16,21 +16,6 @@
             </a>
         </h6>
 
-        @if (session('success'))
-            <div class="alert alert-success alert-dismissible fade show">
-                {{ session('success') }}
-                <button type="button" class="btn-close" data-dismiss="alert" aria-label="Close">
-                </button>
-            </div>
-        @endif
-        @if (session('error'))
-            <div class="alert alert-danger alert-dismissible fade show">
-                {{ session('error') }}
-                <button type="button" class="btn-close" data-dismiss="alert" aria-label="Close">
-                </button>
-            </div>
-        @endif
-
         <div class="table-responsive text-nowrap">
             <table class="table table-hover zero-configuration">
                 <thead>
@@ -92,7 +77,7 @@
                     <div class="col">
                         <div class="row mb-3">
                             <label for="cabang_id" class="form-label">Cabang</label>
-                            <select name="cabang_id" id="cabang_id" class="form-control" required>
+                            <select name="cabang_id" id="cabang_id_index" class="form-control" required>
                                 <option value="">== Pilih Cabang ==</option>
                                 @foreach ($cabangs as $cabang)
                                     <option value="{{ $cabang->id }}">{{ $cabang->nama }}</option>
@@ -101,7 +86,7 @@
                         </div>
                         <div class="row mb-3">
                             <label for="machine_id" class="form-label">Mesin</label>
-                            <select name="machine_id" id="machine_id" class="form-control" required>
+                            <select name="machine_id" id="machine_id_index" class="form-control" required>
                             </select>
                         </div>
                         <div class="row mb-3">
@@ -134,6 +119,25 @@
         $(document).ready(function() {
             var allMachine = @json($machines);
 
+            //index
+            var cabangSelect_index = document.getElementById('cabang_id_index');
+            var machineSelect_index = document.getElementById('machine_id_index');
+
+            cabangSelect_index.addEventListener('change', function() {
+                var selectedCabangId_index = cabangSelect_index.value;
+
+                machineSelect_index.innerHTML = '<option value="">== Pilih ==</option>';
+                allMachine.forEach(function(machine_index) {
+                    if (machine_index.cabang_id == selectedCabangId_index) {
+                        var option = document.createElement('option');
+                        option.value = machine_index.id;
+                        option.textContent = machine_index.nama;
+                        machineSelect_index.appendChild(option);
+                    }
+                });
+            });
+
+            //modal
             var cabangSelect = document.getElementById('cabang_id');
             var machineSelect = document.getElementById('machine_id');
 

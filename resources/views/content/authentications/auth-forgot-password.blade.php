@@ -26,20 +26,6 @@
                         <!-- /Logo -->
                         <h4 class="mb-2">Forgot Password? 🔒</h4>
                         <p class="mb-4">Enter your email and we'll send you instructions to reset your password</p>
-                        @if (session('success'))
-                            <div class="alert alert-success alert-dismissible fade show">
-                                {{ session('success') }}
-                                <button type="button" class="btn-close" data-dismiss="alert" aria-label="Close">
-                                </button>
-                            </div>
-                        @endif
-                        @if (session('error'))
-                            <div class="alert alert-danger alert-dismissible fade show">
-                                {{ session('error') }}
-                                <button type="button" class="btn-close" data-dismiss="alert" aria-label="Close">
-                                </button>
-                            </div>
-                        @endif
                         <form id="formAuthentication" class="mb-3" action="{{ route('actionforgot') }}" method="POST">
                             @csrf
                             <div class="mb-3">

@@ -31,9 +31,7 @@ class UserController extends Controller
             $cabangs = Cabang::all();
             return view('content.web-pages.user.index', compact('users', 'cabangs'));
         } catch (\Exception $e) {
-            Session::flash('error', 'gagal memuat halaman user' . $e->getMessage());
-            return back();
-            // return view('content.web-pages.user.index');
+            return back()->with('error', 'gagal memuat halaman user' . $e->getMessage());
         }
     }
 
@@ -100,11 +98,9 @@ class UserController extends Controller
             $profile->foto = $fileimage;
             $profile->save();
 
-            Session::flash('success', 'Sukses !! berhasil menambahkan user');
-            return redirect('user');
+            return redirect('user')->with('success', 'Sukses !! berhasil menambahkan user');
         } catch (\Exception $e) {
-            Session::flash('error', $e->getMessage());
-            return redirect('user');
+            return redirect('user')->with('error', $e->getMessage());
         }
     }
 
@@ -191,11 +187,9 @@ class UserController extends Controller
             $profile->mariage = $request->mariage;
             $profile->save();
 
-            Session::flash('success', 'Sukses !! berhasil update user');
-            return redirect('user');
+            return redirect('user')->with('success', 'Sukses !! berhasil update user');
         } catch (\Exception $e) {
-            Session::flash('error', $e->getMessage());
-            return redirect('user');
+            return redirect('user')->with('error', $e->getMessage());
         }
     }
 
@@ -216,11 +210,9 @@ class UserController extends Controller
             $profile->delete();
             $user->delete();
 
-            Session::flash('success', 'Sukses menghapus account');
-            return redirect('user');
+            return redirect('user')->with('success', 'Sukses menghapus account');
         } catch (\Exception $e) {
-            Session::flash('error', $e->getMessage());
-            return redirect('user');
+            return redirect('user')->with('error', $e->getMessage());
         }
     }
 }

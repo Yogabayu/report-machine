@@ -34,11 +34,9 @@ class CabangController extends Controller
                 ->join('indonesia_villages as iv', 'c.desa_code', '=', 'iv.code')
                 ->select('c.*', 'ip.name as province', 'ic.name as city', 'id.name as district', 'iv.name as village')
                 ->get();
-            // dd($cabangs);
             return view('content.web-pages.cabang.index', compact('cabangs', 'provinces', 'cities', 'districts', 'village'));
         } catch (\Exception $e) {
-            Session::flash('error', 'Error please inform administrator immediately: ' . $e->getMessage());
-            return view('content.web-pages.cabang.index');
+            return back()->with('error', 'Error please inform administrator immediately: ' . $e->getMessage());
         }
     }
 
@@ -88,11 +86,9 @@ class CabangController extends Controller
             $cabang->foto = $fileimage;
             $cabang->save();
 
-            Session::flash('success', 'Berhasil Tambah Data Cabang');
-            return redirect('cabang');
+            return redirect('cabang')->with('success', 'Berhasil Tambah Data Cabang');
         } catch (\Exception $e) {
-            Session::flash('error', 'Error please inform administrator immediately: ' . $e->getMessage());
-            return redirect('cabang');
+            return redirect('cabang')->with('error', 'Error please inform administrator immediately: ' . $e->getMessage());
         }
     }
 
@@ -164,11 +160,9 @@ class CabangController extends Controller
             $cabang->alamat = $request->alamat;
             $cabang->save();
 
-            Session::flash('success', 'Berhasil Update Data Cabang');
-            return redirect('cabang');
+            return redirect('cabang')->with('success', 'Berhasil Update Data Cabang');
         } catch (\Exception $e) {
-            Session::flash('error', 'Error please inform administrator immediately: ' . $e->getMessage());
-            return redirect('cabang');
+            return redirect('cabang')->with('error', 'Error please inform administrator immediately: ' . $e->getMessage());
         }
     }
 
@@ -186,11 +180,9 @@ class CabangController extends Controller
                 File::delete(public_path('file/cabang/foto/' . $cabang->foto));
             }
             $cabang->delete();
-            Session::flash('success', 'Berhasil menghapus data');
-            return redirect('cabang');
+            return redirect('cabang')->with('success', 'Berhasil menghapus data');
         } catch (\Exception $e) {
-            Session::flash('error', 'Error please inform administrator immediately: ' . $e->getMessage());
-            return redirect('cabang');
+            return redirect('cabang')->with('error', 'Error please inform administrator immediately: ' . $e->getMessage());
         }
     }
 }
