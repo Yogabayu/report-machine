@@ -63,6 +63,7 @@
 
     <!-- Include Scripts for customizer, helper, analytics, config -->
     @include('layouts/sections/scriptsIncludes')
+    <script src="{{ asset('assets') }}/vendor/ckeditor5/build/ckeditor.js"></script>
 
     @include('sweetalert::alert')
 
@@ -113,6 +114,13 @@
         $(function() {
             $('[data-toggle="tooltip"]').tooltip()
         })
+    </script>
+    <script>
+        ClassicEditor
+            .create(document.querySelector('#ckeditor'))
+            .catch(error => {
+                console.error(error);
+            });
     </script>
     @if (session()->has('success'))
         <script>

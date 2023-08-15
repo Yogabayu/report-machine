@@ -118,6 +118,8 @@
                         <div class="row mb-3">
                             <label for="desc" class="form-label">Deskripsi</label>
                             <input type="text" id="desc" name="desc" class="form-control">
+                            {{-- <div id="editor"></div> --}}
+                            {{-- <textarea name="desc" id="ckeditor desc" class="form-control" cols="30" rows="10"></textarea> --}}
                         </div>
                         <div class="row mb-3">
                             <label for="foto" class="form-label">Foto</label>
