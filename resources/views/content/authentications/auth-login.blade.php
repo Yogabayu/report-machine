@@ -56,15 +56,17 @@
                                 </div>
                             </div>
                             <div class="mb-3">
-                                <button class="btn btn-primary d-grid w-100" type="submit">Sign in</button>
+                                <button class="btn btn-primary d-flex justify-content-center w-100" type="submit">
+                                    Sign in <i class="menu-icon tf-icons bx bxs-arrow-to-right"></i>
+                                </button>
                             </div>
-                            <div class="mb-3" style="display: flex; justify-content: center">
+                            {{-- <div class="mb-3" style="display: flex; justify-content: center">
                                 <p>OR</p>
                             </div>
                             <div class="mb-3">
-                                <a href="{{ route('pageRegister') }}" class="btn btn-primary d-grid w-100">Register</a>
-                                {{-- <button class="btn btn-primary d-grid w-100" type="submit">Register</button> --}}
-                            </div>
+                                <a href="{{ route('pageRegister') }}" class="btn btn-primary d-grid w-100">Register</a> --}}
+                            {{-- <button class="btn btn-primary d-grid w-100" type="submit">Register</button> --}}
+                            {{-- </div> --}}
                         </form>
 
                     </div>
