@@ -84,9 +84,10 @@
                                     data-target="#Update{{ $riwayat->id }}">
                                     <i class="menu-icon tf-icons bx bx-edit"></i>
                                 </a>
-                                {{-- <a href="#" class="mx-2 text-warning">
+                                <a href="#" class="mx-2 text-warning" data-toggle="modal"
+                                    data-target="#Show{{ $riwayat->id }}">
                                     <i class="menu-icon tf-icons bx bx-show"></i>
-                                </a> --}}
+                                </a>
                                 <a href="#" class="mx-2 text-danger" data-toggle="modal"
                                     data-target="#Delete{{ $riwayat->id }}">
                                     <i class="menu-icon tf-icons bx bx-minus-circle"></i>

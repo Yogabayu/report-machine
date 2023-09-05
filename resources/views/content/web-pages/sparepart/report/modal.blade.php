@@ -65,3 +65,31 @@
         </form>
     </div>
 </div>
+
+
+<div class="modal fade" id="Show{{ $riwayat->id }}" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel2">Detail Riwayat</h5>
+                <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="col">
+                    <div class="row mb-3 justify-content-center">
+                        <label for="photo" class="form-label">Foto</label>
+                        <img src="{{ asset('file/report') }}/foto/{{ $riwayat->foto }}"
+                            class="justify-content-center" style="width: 500px" data-lightbox="zoomA"
+                            data-title="{{ $riwayat->foto }}" />
+                    </div>
+
+                    <div class="row mb-3">
+                        <label for="cabang_id" class="form-label">Pelapor</label>
+                        <input type="text" id="cabang_id" class="form-control" value="{{ $riwayat->nama_user }}"
+                            disabled>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

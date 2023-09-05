@@ -23,8 +23,10 @@
     <!-- custom -->
     <link rel="stylesheet" type="text/css"
         href="{{ asset('assets') }}/app-assets/vendors/css/tables/datatable/datatables.min.css">
+    <link rel="stylesheet" type="text/css" href="{{ asset('assets') }}/app-assets/vendors/css/lightbox/lightbox.css">
     <link rel="stylesheet" href="{{ asset('assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css') }}" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.0/dist/sweetalert2.min.css">
+
     <style>
         .colored-toast.swal2-icon-success {
             background-color: #a5dc86 !important;
@@ -106,9 +108,12 @@
     <script src="{{ asset('assets') }}/app-assets/js/scripts/pages/dashboard-analytics.js"></script>
     <script src="{{ asset('assets') }}/app-assets/js/scripts/pages/app-user.js"></script>
     <script src="{{ asset('assets') }}/app-assets/js/scripts/pages/invoice.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"
+        integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 
     <script src="{{ asset('assets/vendor/js/menu.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.0/dist/sweetalert2.min.js"></script>
+    <script src="{{ asset('assets') }}/app-assets/vendors/js/lightbox/lightbox-plus-jquery.js"></script>
 
     <script>
         $(function() {
@@ -178,6 +183,15 @@
         </script>
     @endif
     @yield('js')
+    <script>
+        $(document).ready(function() {
+            lightbox.init();
+        });
+        lightbox.option({
+            'resizeDuration': 200,
+            'wrapAround': true,
+        })
+    </script>
 </body>
 
 </html>
