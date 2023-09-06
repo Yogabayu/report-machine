@@ -84,14 +84,14 @@ class ReportController extends Controller
             $sparepart = Sparepart::findOrFail($request->spareparts_id);
             $user      = auth()->user();
 
-            $report = new Report();
-            $report->user_id = $user->id;
-            $report->cabang_id = $sparepart->cabang_id;
-            $report->machine_id = $sparepart->machine_id;
-            $report->spareparts_id = $request->spareparts_id;
-            $report->judul = $request->judul;
-            $report->desc = $request->desc;
-            $report->foto = $fileimage;
+            $report                 = new Report();
+            $report->user_id        = $user->id;
+            $report->cabang_id      = $sparepart->cabang_id;
+            $report->machine_id     = $sparepart->machine_id;
+            $report->spareparts_id  = $request->spareparts_id;
+            $report->judul          = $request->judul;
+            $report->desc           = $request->desc;
+            $report->foto           = $fileimage;
             $report->save();
 
             return back()->with('success', 'Berhasil menambahkan data');
@@ -135,7 +135,7 @@ class ReportController extends Controller
             $report->machine_id     = $request->machine_id;
             $report->spareparts_id  = $request->spareparts_id;
             $report->judul          = $request->judul;
-            $report->desc          = $request->desc;
+            $report->desc           = $request->desc;
             $report->save();
 
             return back()->with('success', 'Berhasil update data');

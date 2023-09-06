@@ -912,6 +912,15 @@
             }
         }
     </style>
+    <style>
+        @media (max-width: 768px) {
+            header {
+                background-image: url('{{ asset('assets') }}/img/header.jpg');
+                background-size: cover
+            }
+        }
+    </style>
+
     <!--PLUGIN-->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
 </head>
@@ -965,26 +974,23 @@
         </article>
     </header>
 
-
-
-
     <!--MAIN-->
     <main id="More">
-        {{-- <!--DIVISION_1-->
+        <!--DIVISION_1-->
         <div class="divisions division_1 flex padding_2x">
-            <section class="flex_content padding_2x">
+            {{-- <section class="flex_content padding_2x">
                 <figure>
                     <img src="https://i.postimg.cc/qqt4ntzz/01.jpg" alt="" loading="lazy" />
                 </figure>
-            </section>
+            </section> --}}
             <section class="flex_content padding_2x">
                 <article>
                     <h2 class="title medium">Let's make your Report better.</h2>
-                    <p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered
-                        alteration in some form, by injected humour, or randomised words which don't look even slightly
-                        believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't
-                        anything embarrassing hidden in the middle of text. </p>
-                    <aside class="fixed_flex">
+                    <p>
+                        Laporan yang informatif dapat mempermudah dalam melakukan pemantauan terkait dengan sistem yang
+                        sedang berjalan.
+                    </p>
+                    {{-- <aside class="fixed_flex">
                         <span>
                             <h4 class="title small">200+</h4>
                             <p>New Furnitures</p>
@@ -993,11 +999,11 @@
                             <h4 class="title small">100+</h4>
                             <p>Recycled Products</p>
                         </span>
-                    </aside>
+                    </aside> --}}
                 </article>
             </section>
         </div>
-
+        {{--
         <!--DIVISION_2-->
         <div class="divisions division_2 flex padding_2x">
             <section class="flex_content padding_2x">
@@ -1060,12 +1066,18 @@
     <!--FOOTER-->
     <footer class="flex">
         <section class="flex_content padding_2x">
-            <a href="https://www.facebook.com/bayu.angin.39/" target="_blank"><i class="fa fa-facebook"></i></a>
-            <a href="https://www.instagram.com/yogabayu.ap/" target="_blank"><i class="fa fa-instagram"></i></a>
-            <a href="https://id.linkedin.com/in/yoga-bayu-anggana-pratama" target="_blank"><i
-                    class="fa fa-linkedin"></i></a>
-            <a href="https://www.youtube.com/channel/UC3PRXW7Wqjy_7oZIM-BNOAQ" target="_blank"><i
-                    class="fa fa-youtube"></i></a>
+            <a href="https://www.facebook.com/bayu.angin.39/" target="_blank">
+                <i class="fa fa-facebook"></i>
+            </a>
+            <a href="https://www.instagram.com/yogabayu.ap/" target="_blank">
+                <i class="fa fa-instagram"></i>
+            </a>
+            <a href="https://id.linkedin.com/in/yoga-bayu-anggana-pratama" target="_blank">
+                <i class="fa fa-linkedin"></i>
+            </a>
+            <a href="https://www.youtube.com/channel/UC3PRXW7Wqjy_7oZIM-BNOAQ" target="_blank">
+                <i class="fa fa-youtube"></i>
+            </a>
         </section>
         {{-- <section class="flex_content">
             <a href="#">Home</a>

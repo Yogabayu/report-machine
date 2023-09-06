@@ -23,11 +23,11 @@ class CabangController extends Controller
     public function index()
     {
         try {
-            $provinces = Province::all();
-            $cities = City::all();
-            $districts = District::all();
-            $village = Village::all();
-            $cabangs = DB::table('cabangs as c')
+            $provinces  = Province::all();
+            $cities     = City::all();
+            $districts  = District::all();
+            $village    = Village::all();
+            $cabangs    = DB::table('cabangs as c')
                 ->join('indonesia_provinces as ip', 'c.provinsi_code', '=', 'ip.code')
                 ->join('indonesia_cities as ic', 'c.kota_code', '=', 'ic.code')
                 ->join('indonesia_districts as id', 'c.kecamatan_code', '=', 'id.code')
@@ -60,13 +60,13 @@ class CabangController extends Controller
     {
         try {
             $request->validate([
-                'provinsi_code' => ['required'],
-                'kota_code' => ['required'],
-                'kecamatan_code' => ['required'],
-                'desa_code' => ['required'],
-                'nama' => ['required'],
-                'alamat' => ['required'],
-                'foto' => ['required', 'max:2048', 'mimes:jpg,jpeg,png'],
+                'provinsi_code'     => ['required'],
+                'kota_code'         => ['required'],
+                'kecamatan_code'    => ['required'],
+                'desa_code'         => ['required'],
+                'nama'              => ['required'],
+                'alamat'            => ['required'],
+                'foto'              => ['required', 'max:2048', 'mimes:jpg,jpeg,png'],
             ]);
 
             $imageEXT   = $request->file('foto')->getClientOriginalName();

@@ -16,12 +16,12 @@ class Analytics extends Controller
     public function index()
     {
         if (Auth::check()) {
-            $user = Auth()->user();
-            $profile = Profile::where('user_id',$user->id)->first();
-            $totalUser = User::count();
-            $totalCabang = Cabang::count();
-            $totalMachine = Machine::count();
-            $totalSparepart = Sparepart::count();
+            $user               = Auth()->user();
+            $profile            = Profile::where('user_id',$user->id)->first();
+            $totalUser          = User::count();
+            $totalCabang        = Cabang::count();
+            $totalMachine       = Machine::count();
+            $totalSparepart     = Sparepart::count();
             return view('content.dashboard.dashboards-analytics',compact('user','profile','totalUser','totalCabang','totalMachine','totalSparepart'));
         } else {
             Session::flash('error', 'You are not login yet');
