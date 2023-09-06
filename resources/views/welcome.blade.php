@@ -3,7 +3,7 @@
 
 <head>
 
-    <title>Reporting Machine</title>
+    <title>Reporting Machines</title>
 
     <!--SHORTCUT ICON-->
     <link rel="shortcut icon" href="{{ asset('file/site') }}/foto/{{ $data->logo }}" />
