@@ -6,12 +6,13 @@
     <title>Reporting Machine</title>
 
     <!--SHORTCUT ICON-->
-    <link rel="shortcut icon"
-        href="{{ asset('file/site') }}/foto/{{ $data->logo }}" />
+    <link rel="shortcut icon" href="{{ asset('file/site') }}/foto/{{ $data->logo }}" />
 
     {{-- META TAGS --}}
     <meta charset="UTF-8" />
     <meta name="language" content="ES" />
+    <meta name="description" content="Sebuah website yang digunakan untuk pelaporan kerusakan mesin">
+    <meta name="keywords" content="Reporting Machine, laporan, analisis data, bisnis, alat pelaporan, informasi bisnis">
     <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
 

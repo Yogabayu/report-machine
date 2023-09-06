@@ -8,32 +8,60 @@ use App\Models\Sparepart;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class ReportController extends Controller
 {
+    public function cetak_pdf()
+    {
+        try {
+            $user = auth()->user();
+            $detail = DB::table('spareparts as s')
+                ->join('machines as m', 'm.id', '=', 's.machine_id')
+                ->join('cabangs as c', 'c.id', '=', 's.cabang_id')
+                ->select('s.*', 'c.nama as nama_cabang', 'c.id as cabang_id', 'm.nama as nama_mesin', 'm.id as machine_id')
+                ->where('s.id', $id)
+                ->first();
+            $riwayatsQuery = DB::table('reports')
+                ->join('users', 'users.id', '=', 'reports.user_id')
+                ->join('profiles', 'profiles.user_id', '=', 'users.id')
+                ->select('reports.*', 'profiles.nama as nama_user');
+
+            if ($user->profile->level != 1) {
+                $riwayatsQuery->where('reports.cabang_id', $user->profile->cabang_id);
+            }
+            $riwayatsQuery->where('reports.spareparts_id', $id);
+            $riwayats = $riwayatsQuery->get();
+            // return view('content.web-pages.sparepart.report.index', compact('detail', 'riwayats'));
+            $pdf = Pdf::loadview('content.web-pages.sparepart.report.pdf',['detail'=>$detail,'riwayats'=>$riwayats]);
+            return $pdf->download('laporan-kerusakan.pdf');
+        } catch (\Exception $e) {
+            return back()->with('error', $e->getMessage());
+        }
+    }
     public function index($id)
     {
         try {
             $user = auth()->user();
             $detail = DB::table('spareparts as s')
-                    ->join('machines as m', 'm.id', '=', 's.machine_id')
-                    ->join('cabangs as c', 'c.id', '=', 's.cabang_id')
-                    ->select('s.*', 'c.nama as nama_cabang', 'c.id as cabang_id', 'm.nama as nama_mesin', 'm.id as machine_id')
-                    ->where('s.id',$id)
-                    ->first();
+                ->join('machines as m', 'm.id', '=', 's.machine_id')
+                ->join('cabangs as c', 'c.id', '=', 's.cabang_id')
+                ->select('s.*', 'c.nama as nama_cabang', 'c.id as cabang_id', 'm.nama as nama_mesin', 'm.id as machine_id')
+                ->where('s.id', $id)
+                ->first();
             $riwayatsQuery = DB::table('reports')
-                    ->join('users','users.id','=','reports.user_id')
-                    ->join('profiles','profiles.user_id','=','users.id')
-                    ->select('reports.*','profiles.nama as nama_user');
+                ->join('users', 'users.id', '=', 'reports.user_id')
+                ->join('profiles', 'profiles.user_id', '=', 'users.id')
+                ->select('reports.*', 'profiles.nama as nama_user');
 
-            if ($user->profile->level!=1) {
-                $riwayatsQuery->where('reports.cabang_id',$user->profile->cabang_id);
+            if ($user->profile->level != 1) {
+                $riwayatsQuery->where('reports.cabang_id', $user->profile->cabang_id);
             }
-            $riwayatsQuery->where('reports.spareparts_id',$id);
+            $riwayatsQuery->where('reports.spareparts_id', $id);
             $riwayats = $riwayatsQuery->get();
-            return view('content.web-pages.sparepart.report.index',compact('detail','riwayats'));
+            return view('content.web-pages.sparepart.report.index', compact('detail', 'riwayats'));
         } catch (\Exception $e) {
-            return back()->with('error',$e->getMessage());
+            return back()->with('error', $e->getMessage());
         }
     }
 
@@ -44,7 +72,7 @@ class ReportController extends Controller
                 'spareparts_id' => 'required',
                 'judul'         => 'required',
                 'desc'          => 'required',
-                'foto'          => ['required','max:2048', 'mimes:jpg,jpeg,png'],
+                'foto'          => ['required', 'max:2048', 'mimes:jpg,jpeg,png'],
             ]);
 
             $imageEXT   = $request->file('foto')->getClientOriginalName();
@@ -66,9 +94,9 @@ class ReportController extends Controller
             $report->foto = $fileimage;
             $report->save();
 
-            return back()->with('success','Berhasil menambahkan data');
+            return back()->with('success', 'Berhasil menambahkan data');
         } catch (\Exception $e) {
-            return back()->with('error',$e->getMessage());
+            return back()->with('error', $e->getMessage());
         }
     }
 
@@ -110,9 +138,9 @@ class ReportController extends Controller
             $report->desc          = $request->desc;
             $report->save();
 
-            return back()->with('success','Berhasil update data');
+            return back()->with('success', 'Berhasil update data');
         } catch (\Exception $e) {
-            return back()->with('error',$e->getMessage());
+            return back()->with('error', $e->getMessage());
         }
     }
 
@@ -126,7 +154,7 @@ class ReportController extends Controller
             $report->delete();
             return back()->with('success', 'Berhasil menghapus data');
         } catch (\Exception $e) {
-            return back()->with('error','Error'.$e->getMessage());
+            return back()->with('error', 'Error' . $e->getMessage());
         }
     }
 }
